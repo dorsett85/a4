@@ -12,7 +12,8 @@ class PracticeController extends Controller
     /*
      * Add individual companies
      */
-    public function practice() {
+    public function practice()
+    {
 
         # Instantiate a new Book Model object
         $company = new Company();
@@ -28,6 +29,16 @@ class PracticeController extends Controller
         $company->save();
 
         dump('Added: ' . $company->ticker);
+    }
+
+
+    /*
+     * Enter authentication before getting Intrinio data
+     */
+    public function practice2()
+    {
+
+
     }
 
 

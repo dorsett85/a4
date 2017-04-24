@@ -3,12 +3,15 @@
 
 Route::get('/', 'ViewController@welcome');
 
-Route::post('/post', 'ViewController@getstock');
+Route::post('/post', 'ViewController@postCompany');
 
 
 
 // Practice route
 Route::get('/practice', 'PracticeController@practice');
+
+Route::get('/practice2', 'PracticeController@practice2');
+
 
 // Route to drop database
 if(App::environment('local')) {
