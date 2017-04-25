@@ -13,7 +13,9 @@ class stockController extends Controller
      */
     public function dbQuery()
     {
-        return Company::first()->get();
+        $company = Company::all();
+
+        return $company->first()->toArray();
     }
 
 
@@ -38,7 +40,20 @@ class stockController extends Controller
         $ticker = Company::where('company_name', '=', $name)->pluck('ticker');
 
         $data = file_get_contents("https://api.intrinio.com/companies?ticker=" . $ticker[0], false, $context);
-        return json_decode($data, JSON_PRETTY_PRINT);
+        $array = json_decode($data, JSON_PRETTY_PRINT);
+        dump($array);
+
+        return view('pages.company')->with([
+            'ticker' => $array['ticker'],
+            'name' => $array['name'],
+            'exchange' => $array['stock_exchange'],
+            'description' => $array['short_description'],
+            'url' => $array['company_url'],
+            'hqState' => $array['hq_state'],
+            'sector' => $array['sector'],
+            'category' => $array['industry_category'],
+            'group' => $array['industry_group'],
+        ]);
     }
 
 
@@ -51,7 +66,8 @@ class stockController extends Controller
         $company = $request->input('company');
 
         $quandlCode = Company::where('company_name', '=', $company)->pluck('quandl_code');
-        return $quandlCode[0];
+
+        return view('welcome', compact('quandlCode'));
 
         /*
         https://www.quandl.com/api/v3/datasets/WIKI/FB/data.csv?column_index[]=1&column_index[]=2&api_key=ZNUBmiZ3d-zMyLGBxyUt

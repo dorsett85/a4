@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 
-    <title>TITLE</title>
+    <title>
+        @yield('title', 'Company Tracker')
+    </title>
     <meta charset="utf-8">
 
     <!-- Bootstrap css -->
@@ -14,17 +16,7 @@
 </head>
 <body>
 
-<div class="container-fluid">
-    <form method="post" action="/post">
-
-        {{ csrf_field() }}
-
-        <label for="company">Enter Company</label>
-        <input type="text" name="company">
-        <input type="submit" class="btn btn-primary">
-    </form>
-</div>
-
+@yield('body')
 
 <!-- JQuery Link -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

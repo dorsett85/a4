@@ -10,10 +10,10 @@ class ViewController extends StockController
     public function welcome() {
         dump($this->dbQuery());
 
-        return view('welcome');
+        return view('pages.welcome');
     }
 
-    public function postCompany(Request $request) {
-        dump($this->companyInfo());
+    public function searchResult() {
+        $this->getStock();
     }
 }

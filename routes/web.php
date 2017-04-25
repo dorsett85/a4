@@ -3,7 +3,7 @@
 
 Route::get('/', 'ViewController@welcome');
 
-Route::post('/post', 'ViewController@postCompany');
+Route::post('/post', 'StockController@companyInfo');
 
 
 
