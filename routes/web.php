@@ -3,12 +3,12 @@
 
 Route::get('/', 'ViewController@welcome');
 
-Route::post('/post', 'StockController@companyInfo');
-
+Route::get('/search', 'ViewController@search');
+Route::post('/search', 'ViewController@searchResults');
 
 
 // Practice route
-Route::get('/practice', 'PracticeController@practice');
+Route::get('/practice', 'StockController@test');
 
 Route::get('/practice2', 'PracticeController@practice2');
 

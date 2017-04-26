@@ -2,27 +2,72 @@
 
 namespace App\Http\Controllers;
 
+use App\Favorite;
 use Illuminate\Http\Request;
 use App\Company;
+
 
 class stockController extends Controller
 {
 
-    /*
-     * Dump a company from eloquent query
-     */
-    public function dbQuery()
-    {
-        $company = Company::all();
+    protected $request;
 
-        return $company->first()->toArray();
+
+    /*
+     * Get all request data during construct
+     */
+    public function __construct(Request $request)
+    {
+
+        $this->request = $request;
+
+    }
+
+    /*
+     * Custom validation to check if user input matches a company from the autocomplete list
+     */
+    public function validateCompany($attribute, $value, $parameters, $validator)
+    {
+
+        foreach (Company::all() as $stock => $name) {
+            $companyArray[$stock] = $name['company_name'];
+        }
+        if (empty($value)) {
+            return true;
+        }
+        else {
+            if (in_array($value, $companyArray)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+
+    /*
+     * Validation function with custom errors
+     */
+    public function errorMsgs()
+    {
+
+        $errors = [
+            'company' => 'required|company',
+        ];
+
+        $errorMessages = [
+            'company' => 'Invalid company, must select from the autocomplete menu',
+        ];
+
+        $this->validate($this->request, $errors, $errorMessages);
+
     }
 
 
     /*
      * Get Intrinio company info based on user selection
      */
-    public function companyInfo(Request $request)
+    public function companyInfo()
     {
 
         // Set up Intrinio login information
@@ -36,24 +81,12 @@ class stockController extends Controller
         ));
 
         // Retrieve ticker from user selection and fetch company info
-        $name = $request->input('company');
+        $name = $this->request->input('company');
         $ticker = Company::where('company_name', '=', $name)->pluck('ticker');
 
         $data = file_get_contents("https://api.intrinio.com/companies?ticker=" . $ticker[0], false, $context);
-        $array = json_decode($data, JSON_PRETTY_PRINT);
-        dump($array);
+        return json_decode($data, JSON_PRETTY_PRINT);
 
-        return view('pages.company')->with([
-            'ticker' => $array['ticker'],
-            'name' => $array['name'],
-            'exchange' => $array['stock_exchange'],
-            'description' => $array['short_description'],
-            'url' => $array['company_url'],
-            'hqState' => $array['hq_state'],
-            'sector' => $array['sector'],
-            'category' => $array['industry_category'],
-            'group' => $array['industry_group'],
-        ]);
     }
 
 

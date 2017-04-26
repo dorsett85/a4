@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Seeder;
 use App\Company;
-use App\Http\Controllers\StockController;
 
 
 class CompanySeeder extends Seeder
