@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Favorite;
 use Illuminate\Http\Request;
 use App\Company;
+use Session;
 
 
 class stockController extends Controller
@@ -23,6 +24,16 @@ class stockController extends Controller
 
     }
 
+
+    /*
+     * Function to check if post data is submitted and leave it blank if it's not
+     */
+    public function isPosted($value)
+    {
+        return $this->request->has($value) ? $this->request->$value : '';
+    }
+
+
     /*
      * Custom validation to check if user input matches a company from the autocomplete list
      */
@@ -34,8 +45,7 @@ class stockController extends Controller
         }
         if (empty($value)) {
             return true;
-        }
-        else {
+        } else {
             if (in_array($value, $companyArray)) {
                 return true;
             } else {
@@ -81,11 +91,53 @@ class stockController extends Controller
         ));
 
         // Retrieve ticker from user selection and fetch company info
-        $name = $this->request->input('company');
+        $name = $this->request->company;
         $ticker = Company::where('company_name', '=', $name)->pluck('ticker');
 
         $data = file_get_contents("https://api.intrinio.com/companies?ticker=" . $ticker[0], false, $context);
-        return json_decode($data, JSON_PRETTY_PRINT);
+        $companyInfo = json_decode($data, JSON_PRETTY_PRINT);
+
+        // Check if values are empty and leave blank if they are
+        function isEmpty($value)
+        {
+            return (!empty($value)) ? $value : 'Information unavailable';
+        }
+
+        $companyInfo = [
+            'company' => isEmpty($companyInfo['name']),
+            'ticker' => isEmpty($companyInfo['ticker']),
+            'stock_exchange' => isEmpty($companyInfo['stock_exchange']),
+            'company_url' => isEmpty($companyInfo['company_url']),
+            'hq_state' => isEmpty($companyInfo['hq_state']),
+            'sector' => isEmpty($companyInfo['sector']),
+            'industry_category' => isEmpty($companyInfo['industry_category']),
+            'industry_group' => isEmpty($companyInfo['industry_group']),
+            'short_description' => isEmpty($companyInfo['short_description'])
+        ];
+
+        return $companyInfo;
+
+    }
+
+
+    /*
+     * Add search result to favorites table
+     */
+    public function addFavorite() {
+
+        $favorite = new Favorite;
+        $favorite->ticker = $this->request->input('ticker');
+        $favorite->company_name = $this->request->input('company');
+        $favorite->stock_exchange = $this->request->input('stock_exchange');
+        $favorite->short_description = $this->request->input('short_description');
+        $favorite->company_url = $this->request->input('company_url');
+        $favorite->hq_state = $this->request->input('hq_state');
+        $favorite->sector = $this->request->input('sector');
+        $favorite->industry_category = $this->request->input('industry_category');
+        $favorite->industry_group = $this->request->input('industry_group');
+        $favorite->save();
+
+        Session::flash('message', 'The company ' . $this->request->company . ' was added.');
 
     }
 
@@ -93,30 +145,26 @@ class stockController extends Controller
     /*
      * Get company names, symbols, and Quandl calls
      */
-    public function getStock(Request $request)
+    public function dataSelect()
     {
 
-        $company = $request->input('company');
+        $company = $this->request->symbol;
 
-        $quandlCode = Company::where('company_name', '=', $company)->pluck('quandl_code');
+        $quandlCode = Company::where('ticker', '=', $company)->pluck('quandl_code');
 
-        return view('welcome', compact('quandlCode'));
+        #$handle = file_get_contents("https://www.quandl.com/api/v3/datasets/" . $quandlCode[0] . "/data.json?api_key=ZNUBmiZ3d-zMyLGBxyUt");
+        #$json = json_decode($handle, true);
 
-        /*
-        https://www.quandl.com/api/v3/datasets/WIKI/FB/data.csv?column_index[]=1&column_index[]=2&api_key=ZNUBmiZ3d-zMyLGBxyUt
-        */
+        return $quandlCode;
 
-        /*
-        $handle = file_get_contents("https://www.quandl.com/api/v3/datasets/" . $quandlCode[0] . "/data.json?api_key=ZNUBmiZ3d-zMyLGBxyUt");
-        $json = json_decode($handle, true);
+    }
 
-        foreach($json as $item => $value) {
-            foreach ($value['data'] as $key => $close) {
-                dump($close[0] . ' ' . $close[4]);
-            }
-        }
-        */
-        # json_encode($array);
+
+    public function getFavorites() {
+
+        $favorites = Favorite::all();
+
+        return $favorites;
     }
 
 

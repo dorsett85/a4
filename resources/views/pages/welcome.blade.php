@@ -6,12 +6,12 @@
 
 @section('body')
 
-<div class="container-fluid">
-    Welcome to the company tracker application.
-</div>
+    <div class="container-fluid">
+        Welcome to the company tracker application.
+    </div>
 
     <div>
-        <a href="/search">Search for a company</a>
+        <p>Start by <a href="/search">Searching for a company</a> or view your <a href="/favorites">favorites</a>.</p>
     </div>
 
 @endsection

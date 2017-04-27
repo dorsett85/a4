@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 class ViewController extends StockController
 {
 
+    /*
+     * Landing page
+     */
     public function welcome()
     {
 
@@ -15,31 +18,76 @@ class ViewController extends StockController
 
     }
 
+
+    /*
+     * Page to search companies
+     */
     public function search()
     {
 
-        $name = $this->request->has('name');
+        $company = $this->isPosted('company');
 
-        return view('pages.search-companies')->with([
-            'name' => $name
+        return view('pages.search')->with([
+            'company' => $company
         ]);
 
 
     }
 
+
+    /*
+     * Page to view search results
+     */
     public function searchResults()
     {
         // Validate form
         $this->errorMsgs();
 
-
-        $name = $this->request->has('company');
+        $company = $this->isPosted('company');
         $array = $this->companyInfo();
+        dump($array);
 
-        return view('pages.search-companies')->with([
+        return view('pages.search')->with([
             'array' => $array,
-            'name' => $name,
+            'company' => $company
         ]);
 
+    }
+
+
+    /*
+     * Redirect to search page after adding book
+     */
+    public function saveFavorite()
+    {
+        $this->addFavorite();
+
+        return redirect('/search');
+
+    }
+
+
+    /*
+     * Page to show favorite companies
+     */
+    public function showFavorites() {
+
+        $favorites = $this->getFavorites();
+
+        return view('pages.favorites')->with([
+            'favorites' => $favorites
+        ]);
+    }
+
+    /*
+     * Page to select data
+     */
+    public function selectData() {
+
+        $company = $this->request->all();
+
+        return view('pages.data')->with([
+            'company' => $company
+        ]);
     }
 }

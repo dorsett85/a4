@@ -21,12 +21,13 @@ class CreateFavoriteCompanyTable extends Migration
             $table->string('ticker');
             $table->string('company_name');
             $table->string('stock_exchange');
-            $table->string('short_description');
+            $table->text('short_description');
             $table->string('company_url');
             $table->string('hq_state');
             $table->string('sector');
             $table->string('industry_category');
             $table->string('industry_group');
+            $table->string('strategy')->nullable();
 
         });
 
