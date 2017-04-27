@@ -45,7 +45,6 @@ class ViewController extends StockController
 
         $company = $this->isPosted('company');
         $array = $this->companyInfo();
-        dump($array);
 
         return view('pages.search')->with([
             'array' => $array,
