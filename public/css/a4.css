@@ -1,6 +1,32 @@
 header {
+    background: #ff5367;
     height: 100px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: .5em;
+    border-radius: 20px 20px 0px 0px;
+}
+
+#sidebar {
+    border-bottom-left-radius: 20px;
+    border: medium solid #000000;
+    padding-bottom: .5em;
+    min-height: 500px;
+}
+
+#creditList {
+    height: 200px;
+    margin-top: 50px;
+}
+
+#bodyDiv {
+    border-bottom-right-radius: 20px;
+    border-top: medium solid #000000;
+    border-right: medium solid #000000;
+    border-bottom: medium solid #000000;
+    padding-bottom: .5em;
+    min-height: 500px;
 }
 
 .shortDescription {

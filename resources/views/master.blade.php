@@ -17,12 +17,16 @@
 <body>
 
 <div class="container">
-    <div class="col-lg-8 col-lg-offset-2 centerDiv">
-        <header>
-            <h1>Company Tracker</h1>
-        </header>
+    <div class="col-lg-8 col-lg-offset-2">
         <div class="row">
-            <div class="container col-md-3">
+            <header>
+                <div id="headerText">
+                    <h1>Company Tracker</h1>
+                </div>
+            </header>
+        </div>
+        <div class="row">
+            <div id="sidebar" class="container col-md-3">
                 <ul class="nav nav-tabs nav-stacked">
                     <li class="nav-item">
                         <a class="nav-link" id="home" href="/">Home</a>
@@ -34,8 +38,13 @@
                         <a class="nav-link" id="hikeCareFeed" href="/search">Search Companies</a>
                     </li>
                 </ul>
+                <div id="creditList">
+                    <p>
+                        Data acquired from:
+                    </p>
+                </div>
             </div>
-            <div class="col-md-9">
+            <div id="bodyDiv" class="col-md-9">
                 @yield('body')
             </div>
         </div>
