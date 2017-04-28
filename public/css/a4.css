@@ -5,26 +5,30 @@ header {
     align-items: center;
     justify-content: center;
     padding-bottom: .5em;
-    border-radius: 20px 20px 0px 0px;
+    border-bottom: thin solid #000000;
 }
 
 #sidebar {
     border-bottom-left-radius: 20px;
-    border: medium solid #000000;
     padding-bottom: .5em;
     min-height: 500px;
 }
 
 #creditList {
     height: 200px;
+    width: 100%;
     margin-top: 50px;
 }
 
+#creditList img {
+    max-width: 100px;
+    border-radius: 5px;
+}
+
 #bodyDiv {
-    border-bottom-right-radius: 20px;
-    border-top: medium solid #000000;
-    border-right: medium solid #000000;
-    border-bottom: medium solid #000000;
+    border-left: thin ridge #000000;
+    -webkit-box-shadow: -5px 0px 5px -3px #616161;
+    box-shadow: -5px 0px 5px -3px #616161;
     padding-bottom: .5em;
     min-height: 500px;
 }
@@ -32,5 +36,9 @@ header {
 .shortDescription {
     display: none;
     margin-top: 1em;
+}
+
+#plotData {
+    background-color: #000;
 }
 

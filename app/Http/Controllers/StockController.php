@@ -147,15 +147,11 @@ class stockController extends Controller
      */
     public function dataSelect()
     {
+        $company = $this->request->company;
+        $symbol = $this->request->symbol;
+        $ticker = Company::where('ticker', '=', $symbol)->pluck('quandl_code');
 
-        $company = $this->request->symbol;
-
-        $quandlCode = Company::where('ticker', '=', $company)->pluck('quandl_code');
-
-        #$handle = file_get_contents("https://www.quandl.com/api/v3/datasets/" . $quandlCode[0] . "/data.json?api_key=ZNUBmiZ3d-zMyLGBxyUt");
-        #$json = json_decode($handle, true);
-
-        return $quandlCode;
+        return ['company' => $company, 'ticker' => $ticker[0]];
 
     }
 

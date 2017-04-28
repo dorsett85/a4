@@ -83,7 +83,9 @@ class ViewController extends StockController
      */
     public function selectData() {
 
-        $company = $this->request->all();
+        $company = $this->dataSelect();
+
+        dump($company);
 
         return view('pages.data')->with([
             'company' => $company

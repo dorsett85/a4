@@ -15,7 +15,7 @@ Route::post('/add', 'ViewController@saveFavorite');
 
 
 // Practice route
-Route::get('/practice', 'StockController@test');
+Route::get('/practice', 'StockController@dataSelect');
 
 
 // Route to drop database
