@@ -69,7 +69,8 @@ class ViewController extends StockController
     /*
      * Page to show favorite companies
      */
-    public function showFavorites() {
+    public function showFavorites()
+    {
 
         $favorites = $this->getFavorites();
 
@@ -78,10 +79,12 @@ class ViewController extends StockController
         ]);
     }
 
+
     /*
      * Page to select data
      */
-    public function selectData() {
+    public function selectData()
+    {
 
         $company = $this->dataSelect();
 
@@ -91,4 +94,20 @@ class ViewController extends StockController
             'company' => $company
         ]);
     }
+
+
+    /*
+     * Redirect to favorites after removing selected one from the list
+     */
+    public function removeCompany()
+    {
+
+        $this->deleteCompany();
+        $favorites = $this->getFavorites();
+
+        return redirect('/favorites');
+
+    }
+
+
 }

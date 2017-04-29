@@ -11,7 +11,7 @@
     </div>
     <button id="plotData" class="btn btn-success">Plot Data</button>
 
-    <div id="tester" style="width:90%;height:250px;"></div>
+    <div id="plotDiv" style="width:90%;height:250px;"></div>
     <input type="hidden" id="{{ $company['ticker'] }}">
 @endsection
 

@@ -12,13 +12,11 @@ $(document).ready(function() {
 
     // Plotly chart
     $('#plotData').click(function() {
-        TESTER = document.getElementById('tester');
+        var plotDiv = document.getElementById('plotDiv');
 
-
-
-        var quandlUrl = 'https://www.quandl.com/api/v3/datasets/GOOG/NASDAQ_AEGN/data.csv?column_index[]=4&api_key=ZNUBmiZ3d-zMyLGBxyUt';
-
-        // https://raw.githubusercontent.com/plotly/datasets/master/wind_speed_laurel_nebraska.csv
+        // Create Quandle url query based on user input
+        var quandlCode = $('input').attr('id');
+        var quandlUrl = 'https://www.quandl.com/api/v3/datasets/' + quandlCode + '/data.csv?column_index[]=4&api_key=ZNUBmiZ3d-zMyLGBxyUt';
 
         Plotly.d3.csv(quandlUrl, function(rows){
             var trace = {
@@ -46,7 +44,7 @@ $(document).ready(function() {
                 }
             };
 
-            Plotly.plot(document.getElementById('tester'), [trace], layout, {showLink: false});
+            Plotly.plot(plotDiv, [trace], layout, {showLink: false});
         });
     })
 

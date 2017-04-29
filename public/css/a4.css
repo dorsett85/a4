@@ -1,36 +1,60 @@
+@import url('https://fonts.googleapis.com/css?family=Bevan');
+@import url('https://fonts.googleapis.com/css?family=Varela+Round');
+
+body {
+    font-family: "Varela Round";
+}
+
 header {
-    background: #ff5367;
-    height: 100px;
+    background: #000000;
+    color: #FFFFFF;
+    min-height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
     padding-bottom: .5em;
-    border-bottom: thin solid #000000;
+    font-family: Bevan;
+}
+
+header h1 {
+    font-size: 40pt;
+}
+
+header div {
+    text-align: center;
+}
+
+#mainDiv .row {
+    min-height: 500px;
 }
 
 #sidebar {
     border-bottom-left-radius: 20px;
+    padding-top: .5em;
     padding-bottom: .5em;
-    min-height: 500px;
+    min-height: inherit;
 }
 
-#creditList {
-    height: 200px;
-    width: 100%;
-    margin-top: 50px;
+.nav-pills > li > a {
+    font-size: larger;
 }
 
-#creditList img {
-    max-width: 100px;
-    border-radius: 5px;
+.nav-pills > li.active > a {
+    background: #800408;
 }
 
 #bodyDiv {
     border-left: thin ridge #000000;
     -webkit-box-shadow: -5px 0px 5px -3px #616161;
     box-shadow: -5px 0px 5px -3px #616161;
-    padding-bottom: .5em;
-    min-height: 500px;
+    padding-top: .5em;
+    padding-bottom: 75px;
+    min-height: inherit;
+}
+
+.favBtn {
+    display: inline-block;
+    margin-top: .5em;
 }
 
 .shortDescription {
@@ -38,7 +62,45 @@ header {
     margin-top: 1em;
 }
 
+hr {
+    height: 1px;
+    color: #000000;
+    background-color: #000000;
+    border: none;
+    box-shadow: 0px 0px 5px 1px;
+}
+
 #plotData {
     background-color: #000;
 }
+
+footer {
+    background: #000000;
+    color: #FFFFFF;
+    min-height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: .5em;
+    font-family: Bevan;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+}
+
+.creditImgs {
+    display: inline-block;
+}
+
+#quandleImg, #intrinoImg {
+    margin-left: 1em;
+    text-align: center;
+}
+
+#quandleImg Img, #intrinoImg img {
+    max-width: 50px;
+    border-radius: 5px;
+    text-align: center;
+}
+
 

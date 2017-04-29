@@ -7,7 +7,7 @@
 @section('body')
 
     @if(Session::get('message') != null)
-        <div class='message'>{{ Session::get('message') }}</div>
+        <div class='add'>{{ Session::get('message') }}</div>
     @endif
 
     <div class="container-fluid">

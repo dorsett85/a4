@@ -17,15 +17,19 @@
 <body>
 
 <header>
-    <div id="headerText">
+    <div>
         <h1>Company Tracker</h1>
+        <h5>
+            Your source for publicly traded stock information
+        </h5>
+
     </div>
 </header>
 
 <div class="container">
-    <div class="col-sm-8 col-sm-offset-2">
+    <div id="mainDiv" class="col-sm-10 col-sm-offset-1">
         <div class="row">
-            
+
             <div id="sidebar" class="container col-md-3">
                 <ul class="nav nav-pills nav-stacked">
                     <li class="nav-item">
@@ -38,28 +42,38 @@
                         <a class="nav-link" id="favorites" href="/favorites">Favorites</a>
                     </li>
                 </ul>
-                <div id="creditList">
-                    <p>
-                        Data acquired from:
-                    </p>
-                    <div>
-                        Quandle
-                    </div>
-                    <img src="images/quandl-logo.png">
-                    <div>
-                        Intrinio
-                    </div>
-                    <img src="images/intrinio-logo.jpg">
-                </div>
             </div>
-            
+
             <div id="bodyDiv" class="col-md-9">
                 @yield('body')
             </div>
-            
+
         </div>
     </div>
 </div>
+
+<footer>
+        <span>
+            This application uses data<br>
+            from the following APIs...
+        </span>
+        <div id="quandleImg" class="creditImgs">
+            <div>
+                Quandle
+            </div>
+            <a href="https://www.quandl.com/" target="_blank">
+                <img src="images/quandl-logo.png">
+            </a>
+        </div>
+        <div id="intrinoImg" class="creditImgs">
+            <div>
+                Intrinio
+            </div>
+            <a href="https://intrinio.com/" target="_blank">
+                <img src="images/intrinio-logo.jpg">
+            </a>
+        </div>
+</footer>
 
 
 <!-- JQuery Link -->

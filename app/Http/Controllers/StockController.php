@@ -123,7 +123,8 @@ class stockController extends Controller
     /*
      * Add search result to favorites table
      */
-    public function addFavorite() {
+    public function addFavorite()
+    {
 
         $favorite = new Favorite;
         $favorite->ticker = $this->request->input('ticker');
@@ -141,6 +142,17 @@ class stockController extends Controller
 
     }
 
+    /*
+     * Get user favorites table
+     */
+    public function getFavorites()
+    {
+
+        $favorites = Favorite::all();
+
+        return $favorites;
+    }
+
 
     /*
      * Get company names, symbols, and Quandl calls
@@ -156,11 +168,16 @@ class stockController extends Controller
     }
 
 
-    public function getFavorites() {
+    /*
+     * Delete company from user favorites table
+     */
+    public function deleteCompany()
+    {
+        $company = $this->request->remove;
+        Favorite::where('company_name', '=', $company)->delete();
 
-        $favorites = Favorite::all();
+        Session::flash('message', 'The company ' . $company . ' was Removed.');
 
-        return $favorites;
     }
 
 
