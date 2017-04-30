@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use App\Company;
 
 
-class CompanySeeder extends Seeder
+class CompanyTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

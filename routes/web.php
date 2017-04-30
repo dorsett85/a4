@@ -8,14 +8,13 @@ Route::post('/search', 'ViewController@searchResults');
 Route::post('/add', 'ViewController@saveFavorite');
 
 Route::get('/favorites', 'ViewController@showFavorites');
-Route::post('/remove', 'ViewController@removeCompany');
+Route::post('/favorites', 'ViewController@removeCompany');
 
-Route::get('/data', 'ViewController@selectData');
-Route::post('/data', 'ViewController@dataResults');
+Route::post('/data', 'ViewController@selectData');
 
 
 // Practice route
-Route::get('/practice', 'StockController@dataSelect');
+Route::get('/practice', 'practiceController@practice');
 
 
 // Route to drop database

@@ -16,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Validator::extend('company', 'App\Http\Controllers\StockController@validateCompany');
+        Validator::extend('duplicate', 'App\Http\Controllers\StockController@duplicateCompany');
         \Schema::defaultStringLength(191);
     }
 

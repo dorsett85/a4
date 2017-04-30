@@ -10,7 +10,10 @@
     <!-- Bootstrap css -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-    <!-- Stylesheet Links -->
+    <!-- Page specific import styles -->
+@yield('pageStyle')
+
+<!-- Stylesheet Links -->
     <link rel="stylesheet" href="css/a4.css">
 
 </head>
@@ -41,6 +44,11 @@
                     <li class="nav-item">
                         <a class="nav-link" id="favorites" href="/favorites">Favorites</a>
                     </li>
+                    @if(isset($company['data']))
+                        <li class="nav-item">
+                            <a class="nav-link" id="data">Data</a>
+                        </li>
+                    @endif
                 </ul>
             </div>
 
@@ -53,26 +61,26 @@
 </div>
 
 <footer>
-        <span>
-            This application uses data<br>
-            from the following APIs...
-        </span>
-        <div id="quandleImg" class="creditImgs">
-            <div>
-                Quandle
-            </div>
-            <a href="https://www.quandl.com/" target="_blank">
-                <img src="images/quandl-logo.png">
-            </a>
+    <h4>
+        This application uses data<br>
+        from the following APIs...
+    </h4>
+    <div id="quandleImg" class="creditImgs">
+        <div>
+            Quandle
         </div>
-        <div id="intrinoImg" class="creditImgs">
-            <div>
-                Intrinio
-            </div>
-            <a href="https://intrinio.com/" target="_blank">
-                <img src="images/intrinio-logo.jpg">
-            </a>
+        <a href="https://www.quandl.com/" target="_blank">
+            <img src="images/quandl-logo.png">
+        </a>
+    </div>
+    <div id="intrinoImg" class="creditImgs">
+        <div>
+            Intrinio
         </div>
+        <a href="https://intrinio.com/" target="_blank">
+            <img src="images/intrinio-logo.jpg">
+        </a>
+    </div>
 </footer>
 
 

@@ -44,10 +44,10 @@ class ViewController extends StockController
         $this->errorMsgs();
 
         $company = $this->isPosted('company');
-        $array = $this->companyInfo();
+        $infoArray = $this->companyInfo();
 
         return view('pages.search')->with([
-            'array' => $array,
+            'infoArray' => $infoArray,
             'company' => $company
         ]);
 
@@ -87,8 +87,6 @@ class ViewController extends StockController
     {
 
         $company = $this->dataSelect();
-
-        dump($company);
 
         return view('pages.data')->with([
             'company' => $company

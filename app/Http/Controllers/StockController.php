@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Favorite;
 use Illuminate\Http\Request;
 use App\Company;
+use App\Favorite;
 use Session;
+use Illuminate\Database\Eloquent\Collection;
 
 
 class stockController extends Controller
@@ -56,17 +57,39 @@ class stockController extends Controller
 
 
     /*
+     * Custom validation to check if user input company has already been added to their list
+     */
+    public function duplicateCompany($attribute, $value, $parameters, $validator)
+    {
+
+        $company = Favorite::where('company_name', '=', $this->request->company)->first();
+        $company = (!is_null($company) ? $company->company_name : null);
+
+        if (empty($value)) {
+            return true;
+        } else {
+            if ($company != $value) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+
+    /*
      * Validation function with custom errors
      */
     public function errorMsgs()
     {
 
         $errors = [
-            'company' => 'required|company',
+            'company' => 'required|company|duplicate',
         ];
 
         $errorMessages = [
             'company' => 'Invalid company, must select from the autocomplete menu',
+            'duplicate' => $this->request->company . ' is already saved to your favorites list.'
         ];
 
         $this->validate($this->request, $errors, $errorMessages);
@@ -92,9 +115,9 @@ class stockController extends Controller
 
         // Retrieve ticker from user selection and fetch company info
         $name = $this->request->company;
-        $ticker = Company::where('company_name', '=', $name)->pluck('ticker');
+        $ticker = Company::where('company_name', '=', $name)->first()->ticker;
 
-        $data = file_get_contents("https://api.intrinio.com/companies?ticker=" . $ticker[0], false, $context);
+        $data = file_get_contents("https://api.intrinio.com/companies?ticker=" . $ticker, false, $context);
         $companyInfo = json_decode($data, JSON_PRETTY_PRINT);
 
         // Check if values are empty and leave blank if they are
@@ -159,11 +182,11 @@ class stockController extends Controller
      */
     public function dataSelect()
     {
-        $company = $this->request->company;
-        $symbol = $this->request->symbol;
-        $ticker = Company::where('ticker', '=', $symbol)->pluck('quandl_code');
 
-        return ['company' => $company, 'ticker' => $ticker[0]];
+        $post = $this->request;
+        $ticker = Company::where('ticker', '=', $post->ticker)->first()->quandl_code;
+
+        return ['company' => $post->company, 'ticker' => $ticker, 'data' => $post->data];
 
     }
 
@@ -176,7 +199,7 @@ class stockController extends Controller
         $company = $this->request->remove;
         Favorite::where('company_name', '=', $company)->delete();
 
-        Session::flash('message', 'The company ' . $company . ' was Removed.');
+        Session::flash('message', 'The company ' . $company . ' was removed.');
 
     }
 

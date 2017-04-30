@@ -6,16 +6,19 @@
 
 @section('body')
 
-    <h1>Companies you are currently tracking:</h1>
+    <h1>Favorite companies</h1>
 
     @if(Session::get('message') != null)
-        <div class='remove'>{{ Session::get('message') }}</div>
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ Session::get('message', '') }}
+        </div>
     @endif
 
     @if(count($favorites) > 0)
         @foreach($favorites as $key => $value)
             <div id="{{ $value['ticker'] }}" class="favCompany">
-                <h2>{{ $value['company_name'] }}</h2>
+                <h3>{{ $value['company_name'] }}</h3>
                 <div>
                     <b>Symbol</b>: {{ $value['ticker'] }}<br>
                     <b>Exchange</b>: {{ $value['stock_exchange'] }}<br>
@@ -25,15 +28,16 @@
                     <b>Industry Category</b>: {{ $value['industry_category'] }} <br>
                     <b>Industry Group</b>: {{ $value['industry_group'] }} <br>
                 </div>
-                <form class="favBtn" action="/data" method="get">
+                <form class="favBtn" action="/data" method="post">
                     {{ csrf_field() }}
                     <button class="btn-xs btn-success infoButton">Description</button>
                     <input type="hidden" name="company" value="{{ $value['company_name'] }}">
-                    <button type="submit" class="btn-xs btn-primary" name="symbol" value="{{ $value['ticker'] }}">
+                    <input type="hidden" name="data" value="data">
+                    <button type="submit" class="btn-xs btn-primary" name="ticker" value="{{ $value['ticker'] }}">
                         Get Data
                     </button>
                 </form>
-                <form class="favBtn" action="/remove" method="post">
+                <form class="favBtn" action="/favorites" method="post">
                     {{ csrf_field() }}
                     <button type="submit" class="btn-xs btn-danger" name="remove" value="{{ $value['company_name'] }}">
                         Remove From Favorites
