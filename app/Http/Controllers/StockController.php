@@ -36,23 +36,19 @@ class stockController extends Controller
 
 
     /*
-     * Custom validation to check if user input matches a company from the autocomplete list
+     * Custom validation to check if user input matches a company from the companies table
      */
     public function validateCompany($attribute, $value, $parameters, $validator)
     {
 
-        foreach (Company::all() as $stock => $name) {
-            $companyArray[$stock] = $name['company_name'];
-        }
-        if (empty($value)) {
-            return true;
+        $match = Company::where('company_name', 'like', "%$value%")->first();
+
+        if(is_null($match)) {
+            return false;
         } else {
-            if (in_array($value, $companyArray)) {
-                return true;
-            } else {
-                return false;
-            }
+            return true;
         }
+
     }
 
 
@@ -62,18 +58,14 @@ class stockController extends Controller
     public function duplicateCompany($attribute, $value, $parameters, $validator)
     {
 
-        $company = Favorite::where('company_name', '=', $this->request->company)->first();
-        $company = (!is_null($company) ? $company->company_name : null);
+        $match = Favorite::where('company_name', '=', $value)->first();
 
-        if (empty($value)) {
+        if(is_null($match)) {
             return true;
         } else {
-            if ($company != $value) {
-                return true;
-            } else {
-                return false;
-            }
+            return false;
         }
+
     }
 
 
@@ -84,11 +76,11 @@ class stockController extends Controller
     {
 
         $errors = [
-            'company' => 'required|company|duplicate',
+            'company' => 'required|min:3|company|duplicate',
         ];
 
         $errorMessages = [
-            'company' => 'Invalid company, must select from the autocomplete menu',
+            'company' => 'Your search did not return any results.',
             'duplicate' => $this->request->company . ' is already saved to your favorites list.'
         ];
 
@@ -115,7 +107,17 @@ class stockController extends Controller
 
         // Retrieve ticker from user selection and fetch company info
         $name = $this->request->company;
-        $ticker = Company::where('company_name', '=', $name)->first()->ticker;
+        $ticker = Company::where('company_name', 'like', "%$name%")->first()->ticker;
+
+        $five = Company::where('company_name', 'like', "%$name%")->orderBy('company_name')->get();
+
+        // ***** LOOP OVER ALL COMPANIES THAT MATCH SEARCH AND GET DATA
+        foreach ($five as $index => $item) {
+            dump($item->ticker);
+            if ($index > 3) {
+                break;
+            }
+        }
 
         $data = file_get_contents("https://api.intrinio.com/companies?ticker=" . $ticker, false, $context);
         $companyInfo = json_decode($data, JSON_PRETTY_PRINT);
