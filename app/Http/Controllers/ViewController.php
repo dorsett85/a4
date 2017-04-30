@@ -44,10 +44,13 @@ class ViewController extends StockController
         $this->errorMsgs();
 
         $company = $this->isPosted('company');
-        $infoArray = $this->companyInfo();
+        $searchResults = $this->companyInfo();
+
+        dump($searchResults);
+
 
         return view('pages.search')->with([
-            'infoArray' => $infoArray,
+            'searchResults' => $searchResults,
             'company' => $company
         ]);
 

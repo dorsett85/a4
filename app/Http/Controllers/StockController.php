@@ -107,38 +107,37 @@ class stockController extends Controller
 
         // Retrieve ticker from user selection and fetch company info
         $name = $this->request->company;
-        $ticker = Company::where('company_name', 'like', "%$name%")->first()->ticker;
+        $matches = Company::where('company_name', 'like', "%$name%")->orderBy('company_name')->get();
 
-        $five = Company::where('company_name', 'like', "%$name%")->orderBy('company_name')->get();
-
-        // ***** LOOP OVER ALL COMPANIES THAT MATCH SEARCH AND GET DATA
-        foreach ($five as $index => $item) {
-            dump($item->ticker);
-            if ($index > 3) {
-                break;
-            }
-        }
-
-        $data = file_get_contents("https://api.intrinio.com/companies?ticker=" . $ticker, false, $context);
-        $companyInfo = json_decode($data, JSON_PRETTY_PRINT);
-
-        // Check if values are empty and leave blank if they are
+        // Function to check if search return fields are empty and leave blank if they are
         function isEmpty($value)
         {
             return (!empty($value)) ? $value : 'Information unavailable';
         }
 
-        $companyInfo = [
-            'company' => isEmpty($companyInfo['name']),
-            'ticker' => isEmpty($companyInfo['ticker']),
-            'stock_exchange' => isEmpty($companyInfo['stock_exchange']),
-            'company_url' => isEmpty($companyInfo['company_url']),
-            'hq_state' => isEmpty($companyInfo['hq_state']),
-            'sector' => isEmpty($companyInfo['sector']),
-            'industry_category' => isEmpty($companyInfo['industry_category']),
-            'industry_group' => isEmpty($companyInfo['industry_group']),
-            'short_description' => isEmpty($companyInfo['short_description'])
-        ];
+        // Loop over companies that match search and get data
+        foreach ($matches as $index => $item) {
+
+            // Stop loop after 5 returns
+            if ($index > 4) {
+                break;
+            }
+
+            $data = file_get_contents("https://api.intrinio.com/companies?ticker=" . $item->ticker, false, $context);
+            $json = json_decode($data, JSON_PRETTY_PRINT);
+
+            $companyInfo[$index] = [
+                'company' => isEmpty($json['name']),
+                'ticker' => isEmpty($json['ticker']),
+                'stock_exchange' => isEmpty($json['stock_exchange']),
+                'company_url' => isEmpty($json['company_url']),
+                'hq_state' => isEmpty($json['hq_state']),
+                'sector' => isEmpty($json['sector']),
+                'industry_category' => isEmpty($json['industry_category']),
+                'industry_group' => isEmpty($json['industry_group']),
+                'short_description' => isEmpty($json['short_description'])
+            ];
+        }
 
         return $companyInfo;
 
@@ -173,7 +172,7 @@ class stockController extends Controller
     public function getFavorites()
     {
 
-        $favorites = Favorite::all();
+        $favorites = Favorite::orderBy('company_name')->get();
 
         return $favorites;
     }
@@ -186,9 +185,9 @@ class stockController extends Controller
     {
 
         $post = $this->request;
-        $quandlCode = Company::where('ticker', '=', $post->ticker)->first()->quandl_code;
+        $quandlCode = Company::where('ticker', '=', $post->ticker)->first();
 
-        return ['company' => $post->company, 'quandlCode' => $quandlCode, 'data' => $post->data];
+        return ['company' => $post->company, 'quandlCode' => $quandlCode->quandl_code, 'data' => $post->data];
 
     }
 

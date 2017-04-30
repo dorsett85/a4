@@ -37,33 +37,39 @@
     @endif
 
     @if(!empty($company))
-        <div id="{{ $infoArray['ticker'] }}" class="favCompany">
-            <h2>{{ $infoArray['company'] }}</h2>
-
-            <form action="/add" method="post">
-                {{ csrf_field() }}
-                @foreach($infoArray as $index => $item)
-                    <input type="hidden" name="{{ $index }}" value="{{ $item }}">
-                @endforeach
-                <input type="submit" class="btn-xs btn-success" value="Add to Favorites">
-            </form>
-
+        <p>Top five or fewer results, ordered alphabetically:</p>
+        @foreach($searchResults as $key => $value)
+            <div id="{{ $value['ticker'] }}" class="favCompany">
+                <h3>{{ $value['company'] }}</h3>
+                <form action="/add" method="post">
+                    {{ csrf_field() }}
+                    @foreach($value as $index => $item)
+                        <input type="hidden" name="{{ $index }}" value="{{ $item }}">
+                    @endforeach
+                    <input type="submit" class="btn-xs btn-success" value="Add to Favorites">
+                </form>
+                <div>
+                    <b>Symbol</b>: {{ $value['ticker'] }}<br>
+                    <b>Exchange</b>: {{ $value['stock_exchange'] }}<br>
+                    <b>Company URL</b>: <a href="http://{{$value['company_url'] }}"
+                                           target="_blank">{{ $value['company_url'] }}</a><br>
+                    <b>State Headquarters</b>: {{ $value['hq_state'] }} <br>
+                    <b>Sector</b>: {{ $value['sector'] }}<br>
+                    <b>Industry Category</b>: {{ $value['industry_category'] }} <br>
+                    <b>Industry Group</b>: {{ $value['industry_group'] }} <br>
+                </div>
+                <form class="inlineBtn" action="/data" method="post">
+                    {{ csrf_field() }}
+                    <button class="btn-xs btn-info infoButton">Description</button>
+                </form>
+                <div class="shortDescription">
+                    {{ $value['short_description'] }} <br>
+                </div>
+            </div>
             <hr>
-            <p>
-                <b>Symbol</b>: {{ $infoArray['ticker'] }}<br>
-                <b>Exchange</b>: {{ $infoArray['stock_exchange'] }}<br>
-                <b>Company URL</b>: <a href="{{$infoArray['company_url'] }}">{{ $infoArray['company_url'] }}</a><br>
-                <b>State Headquarters</b>: {{ $infoArray['hq_state'] }} <br>
-                <b>Sector</b>: {{ $infoArray['sector'] }}<br>
-                <b>Industry Category</b>: {{ $infoArray['industry_category'] }} <br>
-                <b>Industry Group</b>: {{ $infoArray['industry_group'] }} <br>
-            </p>
-            <p>
-                {{ $infoArray['short_description'] }} <br>
-            </p>
-        </div>
-
+        @endforeach
     @endif
+
 
 @endsection
 
