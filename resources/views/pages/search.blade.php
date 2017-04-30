@@ -6,6 +6,10 @@
 
 @section('body')
 
+    <h1 id="searchHead">
+        Search Public Companies
+    </h1>
+
     <form id="searchForm" method="post" action="/search">
         {{ csrf_field() }}
 
@@ -16,14 +20,14 @@
     </form>
 
     @if(Session::get('message') != null)
-        <div class="alert alert-success">
+        <div class="alert alert-success alertSpace">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             {{ Session::get('message', '') }}
         </div>
     @endif
 
     @if(count($errors) > 0)
-        <div class="alert alert-danger">
+        <div class="alert alert-danger alertSpace">
             <ul>
                 @foreach($errors->all() as $error)
                     <li>{{ $error }}</li>

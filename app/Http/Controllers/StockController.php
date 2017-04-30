@@ -161,7 +161,7 @@ class stockController extends Controller
         $favorite->industry_group = $this->request->input('industry_group');
         $favorite->save();
 
-        Session::flash('message', 'The company ' . $this->request->company . ' was added.');
+        Session::flash('message', $this->request->company . ' was added.');
 
     }
 
@@ -184,9 +184,9 @@ class stockController extends Controller
     {
 
         $post = $this->request;
-        $ticker = Company::where('ticker', '=', $post->ticker)->first()->quandl_code;
+        $quandlCode = Company::where('ticker', '=', $post->ticker)->first()->quandl_code;
 
-        return ['company' => $post->company, 'ticker' => $ticker, 'data' => $post->data];
+        return ['company' => $post->company, 'quandlCode' => $quandlCode, 'data' => $post->data];
 
     }
 
@@ -199,7 +199,7 @@ class stockController extends Controller
         $company = $this->request->remove;
         Favorite::where('company_name', '=', $company)->delete();
 
-        Session::flash('message', 'The company ' . $company . ' was removed.');
+        Session::flash('message', $company . ' was removed.');
 
     }
 

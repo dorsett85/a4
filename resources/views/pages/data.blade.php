@@ -6,14 +6,30 @@
 
 @section('body')
 
-    <h3>
+    <h1 id="dataHead">
         Select data for {{ $company['company'] }}
-    </h3>
+    </h1>
 
-    <button id="plotData" class="btn btn-success">Plot Data</button>
+    <form id="plotform">
 
-    <div id="plotDiv" style="width:90%;height:250px;"></div>
-    <input type="hidden" id="{{ $company['ticker'] }}">
+        <input type="date" id="startDate">
+        <input type="date" id="endDate">
+
+        <input type="radio" id="collapse">
+        <select>
+            <option>Closing Price</option>
+            <option>Percent Change Closing Price</option>
+        </select>
+
+        <button id="plotBtn" class="btn btn-success">Plot Data</button>
+
+        <input type="hidden" id="company" value="{{ $company['company'] }}">
+        <input type="hidden" id="quandlCode" value="{{ $company['quandlCode'] }}">
+
+    </form>
+
+    <div id="plotDiv"></div>
+
 @endsection
 
 @section('pageScript')

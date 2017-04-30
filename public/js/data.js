@@ -1,11 +1,13 @@
 $(document).ready(function() {
 
     // Plotly chart
-    $('#plotData').click(function() {
+    $('#plotBtn').click(function(e) {
+        event.preventDefault();
+
         var plotDiv = document.getElementById('plotDiv');
 
         // Create Quandle url query based on user input
-        var quandlCode = $('input').attr('id');
+        var quandlCode = $('#quandlCode').attr('value');
         var quandlUrl = 'https://www.quandl.com/api/v3/datasets/' + quandlCode + '/data.csv?column_index[]=4&api_key=ZNUBmiZ3d-zMyLGBxyUt';
 
         Plotly.d3.csv(quandlUrl, function(rows){
@@ -24,13 +26,14 @@ $(document).ready(function() {
             };
 
             var layout = {
-                yaxis: {title: ""},       // set the y axis title
+                title: $('#company').attr('value'),
+                yaxis: {title: "Closing Price"},       // set the y axis title
                 xaxis: {
                     showgrid: false,                  // remove the x-axis grid lines
                     tickformat: "%B, %Y"              // customize the date format to "month, day"
                 },
                 margin: {                           // update the left, bottom, right, top margin
-                    l: 40, b: 40, r: 40, t: 20
+                    l: 40, b: 40, r: 40, t: 40
                 }
             };
 

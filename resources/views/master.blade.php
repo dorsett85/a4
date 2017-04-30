@@ -25,8 +25,8 @@
         <h5>
             Your source for publicly traded stock information
         </h5>
-
     </div>
+    <h1 id="headerLogo" class="glyphicon glyphicon-briefcase"></h1>
 </header>
 
 <div class="container">

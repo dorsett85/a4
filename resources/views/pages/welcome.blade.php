@@ -6,12 +6,17 @@
 
 @section('body')
 
-    <div class="container-fluid">
-        Welcome to the company tracker application.
-    </div>
+    <h1 id="welcomeHead">
+        Welcome to the company tracker application
+    </h1>
 
     <div>
-        <p>Start by <a href="/search">Searching for a company</a> or view your <a href="/favorites">favorites</a>.</p>
+        <p>
+            Start by <a href="/search">searching for companies</a> to track.  Remember to click 'Add to Favorites'.
+        </p>
+        <p>
+            View your favorites <a href="/favorites">here</a>.
+        </p>
     </div>
 
 @endsection

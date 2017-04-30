@@ -6,7 +6,9 @@
 
 @section('body')
 
-    <h1>Favorite companies</h1>
+    <h1 id="favHead">
+        Favorite companies
+    </h1>
 
     @if(Session::get('message') != null)
         <div class="alert alert-danger">
@@ -22,13 +24,14 @@
                 <div>
                     <b>Symbol</b>: {{ $value['ticker'] }}<br>
                     <b>Exchange</b>: {{ $value['stock_exchange'] }}<br>
-                    <b>Company URL</b>: <a href="http://{{$value['company_url'] }}" target="_blank">{{ $value['company_url'] }}</a><br>
+                    <b>Company URL</b>: <a href="http://{{$value['company_url'] }}"
+                                           target="_blank">{{ $value['company_url'] }}</a><br>
                     <b>State Headquarters</b>: {{ $value['hq_state'] }} <br>
                     <b>Sector</b>: {{ $value['sector'] }}<br>
                     <b>Industry Category</b>: {{ $value['industry_category'] }} <br>
                     <b>Industry Group</b>: {{ $value['industry_group'] }} <br>
                 </div>
-                <form class="favBtn" action="/data" method="post">
+                <form class="inlineBtn" action="/data" method="post">
                     {{ csrf_field() }}
                     <button class="btn-xs btn-success infoButton">Description</button>
                     <input type="hidden" name="company" value="{{ $value['company_name'] }}">
@@ -37,7 +40,7 @@
                         Get Data
                     </button>
                 </form>
-                <form class="favBtn" action="/favorites" method="post">
+                <form class="inlineBtn" action="/favorites" method="post">
                     {{ csrf_field() }}
                     <button type="submit" class="btn-xs btn-danger" name="remove" value="{{ $value['company_name'] }}">
                         Remove From Favorites
@@ -50,9 +53,7 @@
             <hr>
         @endforeach
     @else
-        <div>
-            <p>You have not selected any companies to track yet.</p>
-        </div>
+        <p id="noCompany">You have not selected any companies to track yet.</p>
     @endif
 
 @endsection
