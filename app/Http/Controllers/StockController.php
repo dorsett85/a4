@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Company;
 use App\Favorite;
 use Session;
-use Illuminate\Database\Eloquent\Collection;
 
 
 class stockController extends Controller
@@ -53,35 +52,17 @@ class stockController extends Controller
 
 
     /*
-     * Custom validation to check if user input company has already been added to their list
-     */
-    public function duplicateCompany($attribute, $value, $parameters, $validator)
-    {
-
-        $match = Favorite::where('company_name', '=', $value)->first();
-
-        if(is_null($match)) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
-
-    /*
      * Validation function with custom errors
      */
     public function errorMsgs()
     {
 
         $errors = [
-            'company' => 'required|min:3|company|duplicate',
+            'company' => 'required|min:3|company',
         ];
 
         $errorMessages = [
             'company' => 'Your search did not return any results.',
-            'duplicate' => $this->request->company . ' is already saved to your favorites list.'
         ];
 
         $this->validate($this->request, $errors, $errorMessages);
@@ -109,6 +90,10 @@ class stockController extends Controller
         $name = $this->request->company;
         $matches = Company::where('company_name', 'like', "%$name%")->orderBy('company_name')->get();
 
+        // Retrieve favorites table to compare if company in search results has already been added
+        // If it has, change 'Add to Favorites' button
+        $favorites = Favorite::pluck('company_name')->toArray();
+
         // Function to check if search return fields are empty and leave blank if they are
         function isEmpty($value)
         {
@@ -135,7 +120,8 @@ class stockController extends Controller
                 'sector' => isEmpty($json['sector']),
                 'industry_category' => isEmpty($json['industry_category']),
                 'industry_group' => isEmpty($json['industry_group']),
-                'short_description' => isEmpty($json['short_description'])
+                'short_description' => isEmpty($json['short_description']),
+                'duplicate' =>  in_array($item->company_name, $favorites) ? 'yes' : '',
             ];
         }
 
@@ -162,7 +148,7 @@ class stockController extends Controller
         $favorite->industry_group = $this->request->input('industry_group');
         $favorite->save();
 
-        Session::flash('message', $this->request->company . ' was added.');
+        Session::flash('message', $this->request->company . ' was added to your favorites.');
 
     }
 
@@ -200,7 +186,7 @@ class stockController extends Controller
         $company = $this->request->remove;
         Favorite::where('company_name', '=', $company)->delete();
 
-        Session::flash('message', $company . ' was removed.');
+        Session::flash('message', $company . ' was removed from your favorites.');
 
     }
 

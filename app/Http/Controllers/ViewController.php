@@ -46,9 +46,6 @@ class ViewController extends StockController
         $company = $this->isPosted('company');
         $searchResults = $this->companyInfo();
 
-        dump($searchResults);
-
-
         return view('pages.search')->with([
             'searchResults' => $searchResults,
             'company' => $company
@@ -104,7 +101,6 @@ class ViewController extends StockController
     {
 
         $this->deleteCompany();
-        $favorites = $this->getFavorites();
 
         return redirect('/favorites');
 

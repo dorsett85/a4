@@ -12,10 +12,11 @@
 
     <div>
         <p>
-            Start by <a href="/search">searching for companies</a> to track.  Remember to click 'Add to Favorites'.
+            Start by <a href="/search">searching</a> for companies to track. Remember to click
+            <button class="btn-xs btn-success">Add to Favorites</button>.
         </p>
         <p>
-            View your favorites <a href="/favorites">here</a>.
+            Once saved, view your favorites <a href="/favorites">here</a>.
         </p>
     </div>
 

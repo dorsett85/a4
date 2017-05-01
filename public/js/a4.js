@@ -8,10 +8,18 @@ $(document).ready(function() {
 
 
     // Toggle company description
-    $('.infoButton').click(function(e) {
+
+        // On search page
+    $('.searchInfo').click(function(e) {
+        event.preventDefault();
+        $(this).siblings('.shortDescription').toggle('slow');
+    });
+
+        // on Favorites page
+    $('.favoriteInfo').click(function(e) {
         event.preventDefault();
         $(this).parent().siblings('.shortDescription').toggle('slow');
-    })
+    });
 
 
 });

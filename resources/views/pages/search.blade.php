@@ -13,21 +13,24 @@
     <form id="searchForm" method="post" action="/search">
         {{ csrf_field() }}
 
-        <label for="company">Enter Company</label>
-        <input type="text" name="company" id="company" value="{{ old('company', $company) }}">
-        <input type="submit" class="btn btn-primary">
+        <div class="form-group">
+            <label for="company">Enter company (partial matches accepted)</label>
+            <input type="text" name="company" id="company" class="form-control" value="{{ old('company', $company) }}"
+                   autofocus>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
 
     </form>
 
     @if(Session::get('message') != null)
-        <div class="alert alert-success alertSpace">
+        <div class="alert alert-success spaceAbove">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             {{ Session::get('message', '') }}
         </div>
     @endif
 
     @if(count($errors) > 0)
-        <div class="alert alert-danger alertSpace">
+        <div class="alert alert-danger spaceAbove">
             <ul>
                 @foreach($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -37,17 +40,25 @@
     @endif
 
     @if(!empty($company))
-        <p>Top five or fewer results, ordered alphabetically:</p>
+        <p class="spaceAbove">
+            Top {{ count($searchResults) }} result{{ (count($searchResults) > 1) ? 's' : '' }}
+            for '{{ $company }}', ordered alphabetically:
+        </p>
         @foreach($searchResults as $key => $value)
-            <div id="{{ $value['ticker'] }}" class="favCompany">
+            <div>
                 <h3>{{ $value['company'] }}</h3>
-                <form action="/add" method="post">
-                    {{ csrf_field() }}
-                    @foreach($value as $index => $item)
-                        <input type="hidden" name="{{ $index }}" value="{{ $item }}">
-                    @endforeach
-                    <input type="submit" class="btn-xs btn-success" value="Add to Favorites">
-                </form>
+                @if(empty($value['duplicate']))
+                    <form action="/add" method="post">
+                        {{ csrf_field() }}
+                        @foreach($value as $index => $item)
+                            <input type="hidden" name="{{ $index }}" value="{{ $item }}">
+                        @endforeach
+                        <input type="submit" class="btn-xs btn-success spaceBelow" value="Add to Favorites">
+                    </form>
+                @else
+                    <button type="button" class="btn-xs btn-danger spaceBelow disabled">Already Added to Favorites
+                    </button>
+                @endif
                 <div>
                     <b>Symbol</b>: {{ $value['ticker'] }}<br>
                     <b>Exchange</b>: {{ $value['stock_exchange'] }}<br>
@@ -58,12 +69,9 @@
                     <b>Industry Category</b>: {{ $value['industry_category'] }} <br>
                     <b>Industry Group</b>: {{ $value['industry_group'] }} <br>
                 </div>
-                <form class="inlineBtn" action="/data" method="post">
-                    {{ csrf_field() }}
-                    <button class="btn-xs btn-info infoButton">Description</button>
-                </form>
+                <button class="btn-xs btn-info searchInfo">Description</button>
                 <div class="shortDescription">
-                    {{ $value['short_description'] }} <br>
+                    {{ $value['short_description'] }}
                 </div>
             </div>
             <hr>

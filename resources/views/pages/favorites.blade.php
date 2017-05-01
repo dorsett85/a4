@@ -33,7 +33,7 @@
                 </div>
                 <form class="inlineBtn" action="/data" method="post">
                     {{ csrf_field() }}
-                    <button class="btn-xs btn-success infoButton">Description</button>
+                    <button class="btn-xs btn-success favoriteInfo">Description</button>
                     <input type="hidden" name="company" value="{{ $value['company_name'] }}">
                     <input type="hidden" name="data" value="data">
                     <button type="submit" class="btn-xs btn-primary" name="ticker" value="{{ $value['ticker'] }}">
@@ -47,7 +47,7 @@
                     </button>
                 </form>
                 <div class="shortDescription">
-                    {{ $value['short_description'] }} <br>
+                    {{ $value['short_description'] }}
                 </div>
             </div>
             <hr>

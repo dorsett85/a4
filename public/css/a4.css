@@ -56,12 +56,20 @@ header div {
     min-height: 500px;
 }
 
-#welcomeHead, #searchHead, #favHead, #dataHead {
+#welcomeHead, #searchHead, #favHead, #dataHead, .alreadyAdded {
     margin-bottom: 1em;
 }
 
-.alertSpace {
+.spaceAbove {
     margin-top: 1em;
+}
+
+.spaceBelow {
+    margin-bottom: .5em;
+}
+
+.searchInfo {
+    margin-top: .5em;
 }
 
 .inlineBtn {
@@ -93,11 +101,10 @@ hr {
 footer {
     background: #000000;
     color: #dad9d8;
-    min-height: 75px;
+    min-height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-bottom: .5em;
     font-family: Bevan;
     position: fixed;
     bottom: 0px;
