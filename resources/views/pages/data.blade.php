@@ -15,7 +15,18 @@
         <input type="date" id="startDate">
         <input type="date" id="endDate">
 
-        <input type="radio" id="collapse">
+        <input type="radio" name="collapse" value="none">
+        <input type="radio" name="collapse" value="daily">
+        <input type="radio" name="collapse" value="weekly">
+        <input type="radio" name="collapse" value="monthly">
+        <input type="radio" name="collapse" value="quarterly">
+        <input type="radio" name="collapse" value="annual">
+
+
+
+
+
+
         <select>
             <option>Closing Price</option>
             <option>Percent Change Closing Price</option>
