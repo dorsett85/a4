@@ -13,15 +13,15 @@ class FavoritesTableSeeder extends Seeder
     public function run()
     {
         Favorite::insert([
-        'ticker' => 'LOL',
-        'company_name' => 'Giggle',
-        'stock_exchange' => 'NYSE',
-        'short_description' => 'Google\' goofy cousin',
-        'company_url' => 'www.giggle.com',
-        'hq_state' => 'the internet',
-        'sector' => 'smiles',
-        'industry_category' => 'jokes',
-        'industry_group' => 'comedy',
+        'ticker' => 'TEST',
+        'company_name' => 'Test Company',
+        'stock_exchange' => 'someStockExchange',
+        'short_description' => 'Test company to seed favorites table',
+        'company_url' => 'N/A',
+        'hq_state' => 'The cloud',
+        'sector' => 'Technology',
+        'industry_category' => 'Coding',
+        'industry_group' => 'Laravel',
         'strategy' => 'buy',
         ]);
     }

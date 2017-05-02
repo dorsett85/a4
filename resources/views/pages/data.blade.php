@@ -12,25 +12,60 @@
 
     <form id="plotform">
 
-        <input type="date" id="startDate">
-        <input type="date" id="endDate">
+        <div class="form-group">
+            <label for="transform"></label>
+            <select id="transform" class="form-control">
+                <option value="none">Closing Price</option>
+                <option value="diff" selected>Change in Closing Price</option>
+                <option value="rdiff">Percent Change in Closing Price</option>
+                <option value="cumul">Cumulative Closing Price</option>
+            </select>
+        </div>
 
-        <input type="radio" name="collapse" value="none">
-        <input type="radio" name="collapse" value="daily">
-        <input type="radio" name="collapse" value="weekly">
-        <input type="radio" name="collapse" value="monthly">
-        <input type="radio" name="collapse" value="quarterly">
-        <input type="radio" name="collapse" value="annual">
+        <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <input type="date" name="startDate" id="startDate" class="form-control" value="">
+        </div>
 
+        <div class="form-group">
+            <label for="endDate">End Date</label>
+            <input type="date" name="endDate" id="endDate" class="form-control" value="">
+        </div>
 
+        <div class="form-check">
+            <label class="form-check">
+                <input type="radio" name="collapse" class=custom-control-input" value="daily" checked>
+                Daily
+            </label>
+        </div>
 
+        <div class="form-check">
+            <label class="form-check">
+                <input type="radio" name="collapse" class=custom-control-input" value="weekly">
+                Weekly
+            </label>
+        </div>
 
+        <div class="form-check">
+            <label class="form-check">
+                <input type="radio" name="collapse" class=custom-control-input" value="monthly">
+                Monthly
+            </label>
+        </div>
 
+        <div class="form-check">
+            <label class="form-check">
+                <input type="radio" name="collapse" class=custom-control-input" value="quarterly">
+                Quarterly
+            </label>
+        </div>
 
-        <select>
-            <option>Closing Price</option>
-            <option>Percent Change Closing Price</option>
-        </select>
+        <div class="form-check">
+            <label class="form-check">
+                <input type="radio" name="collapse" class=custom-control-input" value="annual">
+                Annual
+            </label>
+        </div>
 
         <button id="plotBtn" class="btn btn-success">Plot Data</button>
 

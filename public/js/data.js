@@ -7,8 +7,18 @@ $(document).ready(function() {
         var plotDiv = document.getElementById('plotDiv');
 
         // Create Quandle url query based on user input
+        var urlStart = 'https://www.quandl.com/api/v3/datasets/';
         var quandlCode = $('#quandlCode').attr('value');
-        var quandlUrl = 'https://www.quandl.com/api/v3/datasets/' + quandlCode + '/data.csv?column_index[]=4&api_key=ZNUBmiZ3d-zMyLGBxyUt';
+        var column = 'column_index[]=4&';
+        var transform = 'transform=' + $('#transform').attr('value') + '&';
+        var startDate = 'start_date=' + $('#startDate').attr('value') + '&';
+        var endDate = 'end_date=' + $('#endDate').attr('value') + '&';
+        var collapse = 'collapse=' + $('#collapse').attr('value') + '&';
+        var apiKey = 'api_key=ZNUBmiZ3d-zMyLGBxyUt';
+
+
+        var quandlUrl =  urlStart + quandlCode + '/data.csv?' + transform + column + startDate + endDate + collapse + apiKey;
+        console.log(quandlUrl);
 
         Plotly.d3.csv(quandlUrl, function(rows){
             var trace = {
