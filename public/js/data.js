@@ -1,5 +1,20 @@
 $(document).ready(function() {
 
+    var date = new Date();
+    console.log(date);
+
+    $( "#plotform" ).validate();
+
+    $( "#startDate, #endDate" ).datepicker({
+        maxDate: 0,
+        buttonText: "Choose",
+        changeYear: true,
+        yearRange: "1955:" + date.getFullYear(),
+        onClose: function() {
+            $( this ).valid();
+        }
+    });
+
     // Plotly chart
     $('#plotBtn').click(function(e) {
         event.preventDefault();
@@ -8,12 +23,12 @@ $(document).ready(function() {
 
         // Create Quandle url query based on user input
         var urlStart = 'https://www.quandl.com/api/v3/datasets/';
-        var quandlCode = $('#quandlCode').attr('value');
+        var quandlCode = $('#quandlCode').val();
         var column = 'column_index[]=4&';
-        var transform = 'transform=' + $('#transform').attr('value') + '&';
-        var startDate = 'start_date=' + $('#startDate').attr('value') + '&';
-        var endDate = 'end_date=' + $('#endDate').attr('value') + '&';
-        var collapse = 'collapse=' + $('#collapse').attr('value') + '&';
+        var transform = 'transform=' + $('#transform').val() + '&';
+        var startDate = 'start_date=' + $('#startDate').val() + '&';
+        var endDate = 'end_date=' + $('#endDate').val() + '&';
+        var collapse = 'collapse=' + $('#collapse').val() + '&';
         var apiKey = 'api_key=ZNUBmiZ3d-zMyLGBxyUt';
 
 
@@ -30,6 +45,7 @@ $(document).ready(function() {
                 y: rows.map(function(row){          // set the x-data
                     return row['Close'];
                 }),
+                name: $('#transform option:selected').text(),
                 line: {                             // set the width of the line.
                     width: 1
                 },
@@ -43,7 +59,7 @@ $(document).ready(function() {
                     tickformat: "%B, %Y"              // customize the date format to "month, day"
                 },
                 margin: {                           // update the left, bottom, right, top margin
-                    l: 40, b: 40, r: 40, t: 40
+                    l: 40, b: 60, r: 45, t: 40
                 }
             };
 
