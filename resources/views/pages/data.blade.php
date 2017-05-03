@@ -39,7 +39,7 @@
 
         <div class="form-group col-sm-6">
             <label for="startDate">Start Date</label>
-            <input type="text" id="startDate" class="form-control" placeholder="Earliest available data">
+            <input type="text" id="startDate" class="form-control" placeholder="Leave blank for earliest available data">
         </div>
 
         <div class="form-group col-sm-6">
@@ -47,10 +47,19 @@
             <input type="text" id="endDate" class="form-control" placeholder="Today">
         </div>
 
-        <button id="plotBtn" class="btn btn-success">Plot Data</button>
+        <div class="btn-group btn-group-justified">
+            <div class="btn-group">
+                <button id="plotBtn" class="btn btn-info">Plot Data</button>
+            </div>
+            <div class="btn-group">
+                <button id="resetBtn" class="btn btn-danger">Start Over</button>
+            </div>
+        </div>
+
+
 
         <input type="hidden" id="company" value="{{ $company['company'] }}">
-        <input type="hidden" id="quandlCode" value="{{ $company['quandlCode'] }}">
+        <input type="hidden" id="quandlCode" value="{{ $quandlCode }}">
 
     </form>
 

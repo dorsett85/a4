@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Company;
-use Illuminate\Http\Request;
+use App\Favorite;
+use App\Tag;
 
 class ViewController extends StockController
 {
@@ -26,11 +27,11 @@ class ViewController extends StockController
     {
 
         $company = $this->isPosted('company');
+        dump(old('company', ''));
 
         return view('pages.search')->with([
             'company' => $company
         ]);
-
 
     }
 
@@ -40,6 +41,7 @@ class ViewController extends StockController
      */
     public function searchResults()
     {
+
         // Validate form
         $this->errorMsgs();
 
@@ -59,6 +61,7 @@ class ViewController extends StockController
      */
     public function saveFavorite()
     {
+
         $this->addFavorite();
 
         return redirect('/search');
@@ -72,11 +75,12 @@ class ViewController extends StockController
     public function showFavorites()
     {
 
-        $favorites = $this->getFavorites();
+        $favorites = Favorite::orderBy('company_name')->get();
 
         return view('pages.favorites')->with([
             'favorites' => $favorites
         ]);
+
     }
 
 
@@ -86,11 +90,22 @@ class ViewController extends StockController
     public function selectData()
     {
 
-        $company = $this->dataSelect();
+        $quandlCode = Company::where('ticker', '=', $this->request->ticker)->first();
+
+        $favoriteTags = Favorite::with('tags')->where('ticker', '=', $this->request->ticker)->first();
+        dump($favoriteTags->tags->isEmpty());
+
+        $tags = Tag::get();
+        foreach ($tags as $tagName) {
+            dump($tagName['name']);
+        }
 
         return view('pages.data')->with([
-            'company' => $company
+            'quandlCode' => $quandlCode->quandl_code,
+            'company' => $this->request,
+            'tags' => $tags,
         ]);
+
     }
 
 
@@ -100,7 +115,9 @@ class ViewController extends StockController
     public function removeCompany()
     {
 
-        $this->deleteCompany();
+        $company = $this->request->remove;
+        Favorite::where('company_name', '=', $company)->delete();
+        Session::flash('message', $company . ' was removed from your favorites.');
 
         return redirect('/favorites');
 

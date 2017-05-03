@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     var date = new Date();
-    console.log(date);
+    var plotDiv = document.getElementById('plotDiv');
 
     $( "#plotform" ).validate();
 
@@ -19,8 +19,6 @@ $(document).ready(function() {
     $('#plotBtn').click(function(e) {
         event.preventDefault();
 
-        var plotDiv = document.getElementById('plotDiv');
-
         // Create Quandle url query based on user input
         var urlStart = 'https://www.quandl.com/api/v3/datasets/';
         var quandlCode = $('#quandlCode').val();
@@ -31,7 +29,7 @@ $(document).ready(function() {
         var collapse = 'collapse=' + $('#collapse').val() + '&';
         var apiKey = 'api_key=ZNUBmiZ3d-zMyLGBxyUt';
 
-
+        // Full Quandl API url call
         var quandlUrl =  urlStart + quandlCode + '/data.csv?' + transform + column + startDate + endDate + collapse + apiKey;
         console.log(quandlUrl);
 
@@ -52,20 +50,28 @@ $(document).ready(function() {
             };
 
             var layout = {
-                title: $('#company').attr('value'),
-                yaxis: {title: "Closing Price"},       // set the y axis title
+                title: $('#company').val(),
+                yaxis: {title: $('#transform option:selected').text()},       // set the y axis title
                 xaxis: {
                     showgrid: false,                  // remove the x-axis grid lines
                     tickformat: "%B, %Y"              // customize the date format to "month, day"
                 },
                 margin: {                           // update the left, bottom, right, top margin
-                    l: 40, b: 60, r: 45, t: 40
+                    l: 60, b: 60, r: 45, t: 60
                 }
             };
 
             Plotly.plot(plotDiv, [trace], layout, {showLink: false});
         });
-    })
+    });
+
+    //Plotly reset
+    $('#resetBtn').click(function(e) {
+        event.preventDefault();
+
+        Plotly.purge(plotDiv);
+    });
+
 
 });
 

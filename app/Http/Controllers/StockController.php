@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Tag;
 use Illuminate\Http\Request;
 use App\Company;
 use App\Favorite;
@@ -149,44 +150,6 @@ class stockController extends Controller
         $favorite->save();
 
         Session::flash('message', $this->request->company . ' was added to your favorites.');
-
-    }
-
-    /*
-     * Get user favorites table
-     */
-    public function getFavorites()
-    {
-
-        $favorites = Favorite::orderBy('company_name')->get();
-
-        return $favorites;
-    }
-
-
-    /*
-     * Get company names, symbols, and Quandl calls
-     */
-    public function dataSelect()
-    {
-
-        $post = $this->request;
-        $quandlCode = Company::where('ticker', '=', $post->ticker)->first();
-
-        return ['company' => $post->company, 'quandlCode' => $quandlCode->quandl_code, 'data' => $post->data];
-
-    }
-
-
-    /*
-     * Delete company from user favorites table
-     */
-    public function deleteCompany()
-    {
-        $company = $this->request->remove;
-        Favorite::where('company_name', '=', $company)->delete();
-
-        Session::flash('message', $company . ' was removed from your favorites.');
 
     }
 
