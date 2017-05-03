@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Company;
 use App\Favorite;
+use App\Tag;
 
 
 class PracticeController extends Controller
@@ -13,9 +14,10 @@ class PracticeController extends Controller
     /*
      * Add individual companies
      */
-    public function practice(Request $request)
+    public function practice()
     {
-        dump(Favorite::where('company_name', '=', $request->company)->pluck('company_name'));
+        $favorite = Favorite::with('tags')->first();
+        dump($favorite->tags);
 
     }
 
