@@ -78,6 +78,15 @@ class ViewController extends StockController
 
         $favorites = Favorite::orderBy('company_name')->get();
 
+        $favoriteCompanyTags = [];
+        foreach ($favorites as $company) {
+            foreach($company->tags as $tags){
+                $favoriteCompanyTags[$company->company_name] = $tags->name;
+            }
+        }
+        #dump($favoriteCompanyTags);
+
+
         return view('pages.favorites')->with([
             'favorites' => $favorites
         ]);

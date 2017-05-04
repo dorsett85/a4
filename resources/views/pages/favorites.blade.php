@@ -30,6 +30,7 @@
                     <b>Sector</b>: {{ $value['sector'] }}<br>
                     <b>Industry Category</b>: {{ $value['industry_category'] }} <br>
                     <b>Industry Group</b>: {{ $value['industry_group'] }} <br>
+                    <b>Tags</b>:
                 </div>
                 <form class="inlineBtn" action="/data" method="post">
                     {{ csrf_field() }}
