@@ -5,13 +5,13 @@
 @endsection
 
 @section('pageStyle')
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
 @endsection
 
 @section('body')
 
     <h1 id="dataHead">
-        Select data for {{ $company['company'] }}
+        Select data for {{ $company->company_name }}
     </h1>
 
     <form id="plotform">
@@ -39,7 +39,8 @@
 
         <div class="form-group col-sm-6">
             <label for="startDate">Start Date</label>
-            <input type="text" id="startDate" class="form-control" placeholder="Leave blank for earliest available data">
+            <input type="text" id="startDate" class="form-control"
+                   placeholder="Leave blank for earliest available data">
         </div>
 
         <div class="form-group col-sm-6">
@@ -57,19 +58,59 @@
         </div>
 
 
-
-        <input type="hidden" id="company" value="{{ $company['company'] }}">
+        <input type="hidden" id="company" value="{{ $company->company_name }}">
         <input type="hidden" id="quandlCode" value="{{ $quandlCode }}">
 
     </form>
 
     <div id="plotDiv"></div>
 
+    <h3 id="tagsHeader">
+        Add tags and strategy
+    </h3>
+
+    <form action="/tags" method="post">
+        {{ csrf_field() }}
+
+        <div id="tagBoxes" class="">
+            <div class="col-sm-3">
+                @foreach($tagsForCheckboxes as $index => $tag)
+                    @if($index < 8)
+                        <div class="form-check">
+                            <label for="{{ $tag }}" class="form-check-label">
+                                <input type="checkbox" name="tags[]" class="form-check-input" value="{{ $index }}"
+                                        {{ (in_array($tag, $tagsForThisCompany)) ? 'CHECKED' : '' }}>
+                                {{ $tag }}
+                            </label>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+            <div class="col-sm-3">
+                @foreach($tagsForCheckboxes as $index => $tag)
+                    @if($index >= 8)
+                        <div class="form-check">
+                            <label for="{{ $tag }}" class="form-check-label">
+                                <input type="checkbox" name="tags[]" class="form-check-input" value="{{ $index }}"
+                                        {{ in_array($tag, $tagsForThisCompany) ? 'CHECKED' : '' }}>
+                                {{ $tag }}
+                            </label>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+        <input type="hidden" name="ticker" value="{{ $company->ticker }}">
+        <button type="submit" class="btn btn-success" name="id" value="{{ $company->id }}">Submit tags (*this will
+            reset your plot)
+        </button>
+    </form>
+
 @endsection
 
 @section('pageScript')
     <!-- JQuery UI -->
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.js"></script>
 
     <!-- Plotly -->

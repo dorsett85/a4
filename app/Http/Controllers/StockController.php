@@ -43,7 +43,7 @@ class stockController extends Controller
 
         $match = Company::where('company_name', 'like', "%$value%")->first();
 
-        if(is_null($match)) {
+        if (is_null($match)) {
             return false;
         } else {
             return true;
@@ -87,7 +87,7 @@ class stockController extends Controller
             )
         ));
 
-        // Retrieve ticker from user selection and fetch company info
+        // Match user input to the companies table
         $name = $this->request->company;
         $matches = Company::where('company_name', 'like', "%$name%")->orderBy('company_name')->get();
 
@@ -100,6 +100,8 @@ class stockController extends Controller
         {
             return (!empty($value)) ? $value : 'Information unavailable';
         }
+
+        $companyInfo = [];
 
         // Loop over companies that match search and get data
         foreach ($matches as $index => $item) {
@@ -122,7 +124,7 @@ class stockController extends Controller
                 'industry_category' => isEmpty($json['industry_category']),
                 'industry_group' => isEmpty($json['industry_group']),
                 'short_description' => isEmpty($json['short_description']),
-                'duplicate' =>  in_array($item->company_name, $favorites) ? 'yes' : '',
+                'duplicate' => in_array($item->company_name, $favorites) ? 'yes' : '',
             ];
         }
 
@@ -154,4 +156,17 @@ class stockController extends Controller
     }
 
 
+    /*
+     * Add/remove tags from tags table
+     */
+    public function syncTags()
+    {
+
+        $company = Favorite::find($this->request->id);
+        $tags = ($this->request->tags) ?: [];
+
+        $company->tags()->sync($tags);
+        $company->save();
+
+    }
 }

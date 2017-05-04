@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Company;
 use App\Favorite;
 use App\Tag;
+use Illuminate\Support\Facades\Input;
+use Session;
 
 class ViewController extends StockController
 {
@@ -27,7 +29,6 @@ class ViewController extends StockController
     {
 
         $company = $this->isPosted('company');
-        dump(old('company', ''));
 
         return view('pages.search')->with([
             'company' => $company
@@ -85,43 +86,63 @@ class ViewController extends StockController
 
 
     /*
+     * Redirect to favorites after removing selected one from the list
+     */
+    public function removeCompany()
+    {
+
+        $company = Favorite::find($this->request->remove);
+        $company->tags()->detach();
+        $company->delete();
+
+        Session::flash('message', $company->company_name . ' was removed from your favorites.');
+
+        return redirect('/favorites');
+
+    }
+
+
+    /*
      * Page to select data
      */
     public function selectData()
     {
 
-        $quandlCode = Company::where('ticker', '=', $this->request->ticker)->first();
+        // Check if old redirected value after updating tags exists
+        $ticker = (is_null(Input::old('ticker'))) ? $this->request->ticker : Input::old('ticker');
 
-        $favoriteTags = Favorite::with('tags')->where('ticker', '=', $this->request->ticker)->first();
-        dump($favoriteTags->tags->isEmpty());
+        // Get model data for form input
+        $company = Company::where('ticker', '=', $ticker)->first();
+        $favorite = Favorite::with('tags')->where('ticker', '=', $company->ticker)->first();
 
-        $tags = Tag::get();
-        foreach ($tags as $tagName) {
-            dump($tagName['name']);
+        // Get array of tags for company and array of all tags
+        $tagsForThisCompany = [];
+        foreach ($favorite->tags as $tag) {
+            $tagsForThisCompany[] = $tag->name;
         }
 
+        $tagsForCheckboxes = Tag::getTagsForCheckboxes();
+
         return view('pages.data')->with([
-            'quandlCode' => $quandlCode->quandl_code,
-            'company' => $this->request,
-            'tags' => $tags,
+            'quandlCode' => $company->quandl_code,
+            'company' => $favorite,
+            'tagsForCheckboxes' => $tagsForCheckboxes,
+            'tagsForThisCompany' => $tagsForThisCompany,
         ]);
 
     }
 
 
     /*
-     * Redirect to favorites after removing selected one from the list
+     * Update tags and redirect to
      */
-    public function removeCompany()
+    public function updateTags()
     {
 
-        $company = $this->request->remove;
-        Favorite::where('company_name', '=', $company)->delete();
-        Session::flash('message', $company . ' was removed from your favorites.');
+        $this->syncTags();
 
-        return redirect('/favorites');
+        return redirect('/data')->withInput();
 
     }
-
 
 }

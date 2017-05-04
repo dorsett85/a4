@@ -14,7 +14,7 @@ class FavoriteTagTableSeeder extends Seeder
     public function run()
     {
         $favorite = [
-            'Test Company' => ['bluechip', 'bo derek']
+            'Biogen Inc' => ['bluechip', 'bo derek']
         ];
 
         foreach ($favorite as $name => $tags) {

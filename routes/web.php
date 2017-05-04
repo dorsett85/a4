@@ -10,7 +10,9 @@ Route::post('/add', 'ViewController@saveFavorite');
 Route::get('/favorites', 'ViewController@showFavorites');
 Route::post('/favorites', 'ViewController@removeCompany');
 
-Route::post('/data', 'ViewController@selectData');
+Route::any('/data', 'ViewController@selectData');
+
+Route::post('/tags', 'ViewController@updateTags');
 
 
 // Practice route

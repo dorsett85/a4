@@ -17,8 +17,8 @@
         </div>
     @endif
 
-    @if(count($favorites) > 0)
-        @foreach($favorites as $key => $value)
+    @if(!$favorites->isEmpty())
+        @foreach($favorites as $value)
             <div id="{{ $value['ticker'] }}" class="favCompany">
                 <h3>{{ $value['company_name'] }}</h3>
                 <div>
@@ -34,15 +34,15 @@
                 <form class="inlineBtn" action="/data" method="post">
                     {{ csrf_field() }}
                     <button class="btn-xs btn-success favoriteInfo">Description</button>
-                    <input type="hidden" name="company" value="{{ $value['company_name'] }}">
+                    <input type="hidden" name="ticker" value="{{ $value['ticker'] }}">
                     <input type="hidden" name="data" value="data">
-                    <button type="submit" class="btn-xs btn-primary" name="ticker" value="{{ $value['ticker'] }}">
+                    <button type="submit" class="btn-xs btn-primary">
                         Get Data
                     </button>
                 </form>
                 <form class="inlineBtn" action="/favorites" method="post">
                     {{ csrf_field() }}
-                    <button type="submit" class="btn-xs btn-danger" name="remove" value="{{ $value['company_name'] }}">
+                    <button type="submit" class="btn-xs btn-danger" name="remove" value="{{ $value['id'] }}">
                         Remove From Favorites
                     </button>
                 </form>
