@@ -94,6 +94,23 @@ hr {
     width: 100%;
 }
 
+#tagsHeader {
+    text-align: center;
+}
+.flexCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#leftCheckboxes {
+    margin-left: 15px;
+}
+
+#rightCheckboxes {
+    margin-left: 10px;
+}
+
 footer {
     background: #000000;
     color: #dad9d8;

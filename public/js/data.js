@@ -57,7 +57,7 @@ $(document).ready(function() {
                     tickformat: "%B, %Y"              // customize the date format to "month, day"
                 },
                 margin: {                           // update the left, bottom, right, top margin
-                    l: 60, b: 60, r: 45, t: 60
+                    l: 60, b: 60, r: 60, t: 60
                 }
             };
 

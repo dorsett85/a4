@@ -20,9 +20,9 @@
             <label for="transform">Data Type</label>
             <select id="transform" class="form-control">
                 <option value="none">Closing Price</option>
-                <option value="diff">Change in Closing Price</option>
-                <option value="rdiff">Percent Change in Closing Price</option>
-                <option value="cumul">Cumulative Closing Price</option>
+                <option value="diff">Change, Closing Price</option>
+                <option value="rdiff">% Change, Closing Price</option>
+                <option value="cumul">Cumulative, Closing Price</option>
             </select>
         </div>
 
@@ -50,7 +50,7 @@
 
         <div class="btn-group btn-group-justified">
             <div class="btn-group">
-                <button id="plotBtn" class="btn btn-info">Plot Data</button>
+                <button id="plotBtn" class="btn btn-info">New Chart/Add Layer</button>
             </div>
             <div class="btn-group">
                 <button id="resetBtn" class="btn btn-danger">Start Over</button>
@@ -63,20 +63,22 @@
 
     </form>
 
-    <div id="plotDiv"></div>
+    <div id="plotDiv">
+        <!-- Plotly chart will go here on button click -->
+    </div>
 
     <h3 id="tagsHeader">
-        Add tags and strategy
+        Add tags
     </h3>
 
     <form action="/tags" method="post">
         {{ csrf_field() }}
 
-        <div id="tagBoxes" class="">
-            <div class="col-sm-3">
+        <div class="flexCenter">
+            <div class="">
                 @foreach($tagsForCheckboxes as $index => $tag)
                     @if($index < 8)
-                        <div class="form-check">
+                        <div id="leftCheckboxes" class="form-check">
                             <label for="{{ $tag }}" class="form-check-label">
                                 <input type="checkbox" name="tags[]" class="form-check-input" value="{{ $index }}"
                                         {{ (in_array($tag, $tagsForThisCompany)) ? 'CHECKED' : '' }}>
@@ -86,10 +88,10 @@
                     @endif
                 @endforeach
             </div>
-            <div class="col-sm-3">
+            <div class="">
                 @foreach($tagsForCheckboxes as $index => $tag)
                     @if($index >= 8)
-                        <div class="form-check">
+                        <div id="rightCheckboxes" class="form-check">
                             <label for="{{ $tag }}" class="form-check-label">
                                 <input type="checkbox" name="tags[]" class="form-check-input" value="{{ $index }}"
                                         {{ in_array($tag, $tagsForThisCompany) ? 'CHECKED' : '' }}>
@@ -100,10 +102,15 @@
                 @endforeach
             </div>
         </div>
-        <input type="hidden" name="ticker" value="{{ $company->ticker }}">
-        <button type="submit" class="btn btn-success" name="id" value="{{ $company->id }}">Submit tags (*this will
-            reset your plot)
-        </button>
+        <div class="flexCenter">
+            <input type="hidden" name="ticker" value="{{ $company->ticker }}">
+            <button type="submit" class="btn btn-success col-sm-6" name="id" value="{{ $company->id }}">Submit
+                tags (*this will
+                reset your plot)
+            </button>
+        </div>
+
+
     </form>
 
 @endsection

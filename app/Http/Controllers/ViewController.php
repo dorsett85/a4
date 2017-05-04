@@ -78,17 +78,11 @@ class ViewController extends StockController
 
         $favorites = Favorite::orderBy('company_name')->get();
 
-        $favoriteCompanyTags = [];
-        foreach ($favorites as $company) {
-            foreach($company->tags as $tags){
-                $favoriteCompanyTags[$company->company_name] = $tags->name;
-            }
-        }
-        #dump($favoriteCompanyTags);
-
+        $allFavoritesTags = Favorite::getTagsForFavorites();
 
         return view('pages.favorites')->with([
-            'favorites' => $favorites
+            'favorites' => $favorites,
+            'allFavoritesTags' => $allFavoritesTags,
         ]);
 
     }
@@ -131,6 +125,7 @@ class ViewController extends StockController
         }
 
         $tagsForCheckboxes = Tag::getTagsForCheckboxes();
+
 
         return view('pages.data')->with([
             'quandlCode' => $company->quandl_code,

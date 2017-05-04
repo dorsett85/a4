@@ -44,7 +44,7 @@
                     <li class="nav-item">
                         <a class="nav-link" id="favorites" href="/favorites">Favorites</a>
                     </li>
-                    @if(isset($company['data']))
+                    @if(isset($favorites['data']))
                         <li class="nav-item">
                             <a class="nav-link" id="data">Data</a>
                         </li>

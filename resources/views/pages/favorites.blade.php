@@ -24,13 +24,18 @@
                 <div>
                     <b>Symbol</b>: {{ $value['ticker'] }}<br>
                     <b>Exchange</b>: {{ $value['stock_exchange'] }}<br>
-                    <b>Company URL</b>: <a href="http://{{$value['company_url'] }}"
+                    <b>Company URL</b>: <a href="{{$value['company_url'] }}"
                                            target="_blank">{{ $value['company_url'] }}</a><br>
                     <b>State Headquarters</b>: {{ $value['hq_state'] }} <br>
                     <b>Sector</b>: {{ $value['sector'] }}<br>
                     <b>Industry Category</b>: {{ $value['industry_category'] }} <br>
                     <b>Industry Group</b>: {{ $value['industry_group'] }} <br>
                     <b>Tags</b>:
+                    @foreach($allFavoritesTags as $name => $tags)
+                        @if($name == $value['company_name'])
+                            {{ $tags }}
+                        @endif
+                    @endforeach
                 </div>
                 <form class="inlineBtn" action="/data" method="post">
                     {{ csrf_field() }}
@@ -54,7 +59,7 @@
             <hr>
         @endforeach
     @else
-        <p id="noCompany">You have not selected any companies to track yet.</p>
+        <h4>You have not selected any companies to track yet.</h4>
     @endif
 
 @endsection

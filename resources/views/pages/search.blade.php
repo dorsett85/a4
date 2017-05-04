@@ -62,7 +62,7 @@
                 <div>
                     <b>Symbol</b>: {{ $value['ticker'] }}<br>
                     <b>Exchange</b>: {{ $value['stock_exchange'] }}<br>
-                    <b>Company URL</b>: <a href="http://{{$value['company_url'] }}"
+                    <b>Company URL</b>: <a href="{{$value['company_url'] }}"
                                            target="_blank">{{ $value['company_url'] }}</a><br>
                     <b>State Headquarters</b>: {{ $value['hq_state'] }} <br>
                     <b>Sector</b>: {{ $value['sector'] }}<br>
