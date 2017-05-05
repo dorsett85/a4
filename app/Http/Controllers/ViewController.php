@@ -115,10 +115,24 @@ class ViewController extends StockController
         $ticker = (is_null(Input::old('ticker'))) ? $this->request->ticker : Input::old('ticker');
 
         // Get model data for form input
-        $company = Company::where('ticker', '=', $ticker)->first();
-        $favorite = Favorite::with('tags')->where('ticker', '=', $company->ticker)->first();
+        $companies = Company::all();
+        $allFavorites = Favorite::with('tags')->get();
+
+        $quandleCode = $companies->where('ticker', '=', $ticker)->first();
+
+        // Get Quandl codes for favorites companies
+        $favoriteDropdown = [];
+        foreach ($allFavorites as $favorite) {
+            foreach ($companies as $company) {
+                if ($favorite->ticker == $company->ticker & $favorite->ticker != $quandleCode->ticker) {
+                    $favoriteDropdown[] = ['company_name' => $favorite->company_name, 'quandl_code' => $company->quandl_code];
+                }
+            }
+        }
 
         // Get array of tags for company and array of all tags
+        $favorite = $allFavorites->where('ticker', '=', $ticker)->first();
+
         $tagsForThisCompany = [];
         foreach ($favorite->tags as $tag) {
             $tagsForThisCompany[] = $tag->name;
@@ -127,9 +141,11 @@ class ViewController extends StockController
         $tagsForCheckboxes = Tag::getTagsForCheckboxes();
 
 
+
         return view('pages.data')->with([
-            'quandlCode' => $company->quandl_code,
+            'quandlCode' => $quandleCode->quandl_code,
             'company' => $favorite,
+            'favoriteDropdown' => $favoriteDropdown,
             'tagsForCheckboxes' => $tagsForCheckboxes,
             'tagsForThisCompany' => $tagsForThisCompany,
         ]);

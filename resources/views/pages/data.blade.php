@@ -20,7 +20,7 @@
 
     <form id="plotform">
 
-        <div class="form-group col-sm-7">
+        <div class="form-group col-sm-4">
             <label for="transform">Data Type</label>
             <select id="transform" class="form-control">
                 <option value="none">Closing Price</option>
@@ -30,7 +30,7 @@
             </select>
         </div>
 
-        <div class="form-group col-sm-5">
+        <div class="form-group col-sm-4">
             <label for="collapse">Interval</label>
             <select id="collapse" class="form-control">
                 <option value="daily">Daily</option>
@@ -39,6 +39,24 @@
                 <option value="quarterly">Quarterly</option>
                 <option value="annual">Annual</option>
             </select>
+        </div>
+
+        <div class="form-group col-sm-4 compareDropdown">
+            <label for="compare">Compare</label>
+            <button id="compare" data-toggle="dropdown" class="btn btn-primary dropdown-toggle"
+                    data-placeholder="Other Favorites">
+                {{ (empty($favoriteDropdown)) ? 'No Other Favorites' : 'Other Favorites' }}<span class="caret"></span>
+            </button>
+            <ul id="compareList" class="dropdown-menu">
+                    @foreach($favoriteDropdown as $value)
+                        <li><input type="checkbox" name="chk[]" id="{{ $value['quandl_code'] }}" class="form-check-input"
+                                   value="{{ $value['quandl_code'] }}"><label
+                                    for="{{ $value['quandl_code']}}">{{ $value['company_name'] }}</label>
+                        </li>
+                    @endforeach
+
+
+            </ul>
         </div>
 
         <div class="form-group col-sm-6">

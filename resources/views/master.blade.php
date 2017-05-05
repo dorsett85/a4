@@ -33,7 +33,7 @@
     <div id="mainDiv" class="col-sm-10 col-sm-offset-1">
         <div class="row">
 
-            <div id="sidebar" class="container col-md-3">
+            <div id="sidebar" class="col-md-3">
                 <ul class="nav nav-pills nav-stacked">
                     <li class="nav-item">
                         <a class="nav-link" id="home" href="/">Home</a>

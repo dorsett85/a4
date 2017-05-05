@@ -19,6 +19,9 @@ $(document).ready(function() {
     $('#plotBtn').click(function(e) {
         event.preventDefault();
 
+        var $boxes = $('input[name=chk]:checked');
+        console.log($boxes.length);
+
         // Create Quandle url query based on user input
         var urlStart = 'https://www.quandl.com/api/v3/datasets/';
         var quandlCode = $('#quandlCode').val();

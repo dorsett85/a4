@@ -29,9 +29,9 @@ header div {
 }
 
 #sidebar {
-    border-bottom-left-radius: 20px;
     padding-top: .5em;
     margin-bottom: 1em;
+    max-width: 300px;
 }
 
 .nav-pills > li > a {
@@ -90,6 +90,9 @@ hr {
     box-shadow: 0px 0px 5px 1px;
 }
 
+.compareDropdown {
+    max-width: 200px;
+}
 #plotDiv {
     width: 100%;
 }
