@@ -5,7 +5,11 @@
 @endsection
 
 @section('pageStyle')
+    <!-- JQuery UI -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+
+    <!-- Page specific css -->
+    <link rel="stylesheet" href="css/dropdowns-enhancement.css">
 @endsection
 
 @section('body')
@@ -67,51 +71,42 @@
         <!-- Plotly chart will go here on button click -->
     </div>
 
-    <h3 id="tagsHeader">
+    <h3>
         Add tags
     </h3>
 
     <form action="/tags" method="post">
         {{ csrf_field() }}
 
-        <div class="flexCenter">
-            <div class="">
-                @foreach($tagsForCheckboxes as $index => $tag)
-                    @if($index < 8)
-                        <div id="leftCheckboxes" class="form-check">
-                            <label for="{{ $tag }}" class="form-check-label">
-                                <input type="checkbox" name="tags[]" class="form-check-input" value="{{ $index }}"
-                                        {{ (in_array($tag, $tagsForThisCompany)) ? 'CHECKED' : '' }}>
-                                {{ $tag }}
-                            </label>
-                        </div>
-                    @endif
-                @endforeach
+        <div class="btn-group btn-group-justified">
+            <div class="btn-group">
+                <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" data-placeholder="Add Tags">
+                    Checked
+                    option <span class="caret"></span></button>
+                <ul class="dropdown-menu pull-top">
+                    @foreach($tagsForCheckboxes as $index => $tag)
+                        <li><input type="checkbox" id="{{ $tag }}" name="tags[]" class="form-check-input"
+                                   value="{{ $index }}"
+                                    {{ (in_array($tag, $tagsForThisCompany)) ? 'CHECKED' : '' }}><label
+                                    for="{{ $tag}}">{{ $tag }}</label>
+                        </li>
+                    @endforeach
+                </ul>
             </div>
-            <div class="">
-                @foreach($tagsForCheckboxes as $index => $tag)
-                    @if($index >= 8)
-                        <div id="rightCheckboxes" class="form-check">
-                            <label for="{{ $tag }}" class="form-check-label">
-                                <input type="checkbox" name="tags[]" class="form-check-input" value="{{ $index }}"
-                                        {{ in_array($tag, $tagsForThisCompany) ? 'CHECKED' : '' }}>
-                                {{ $tag }}
-                            </label>
-                        </div>
-                    @endif
-                @endforeach
+            <div class="btn-group">
+                <input type="hidden" name="ticker" value="{{ $company->ticker }}">
+                <button type="submit" class="btn btn-success" name="id" value="{{ $company->id }}">Submit
+                    tags (*this will
+                    reset your plot)
+                </button>
             </div>
         </div>
-        <div class="flexCenter">
-            <input type="hidden" name="ticker" value="{{ $company->ticker }}">
-            <button type="submit" class="btn btn-success col-sm-6" name="id" value="{{ $company->id }}">Submit
-                tags (*this will
-                reset your plot)
-            </button>
-        </div>
-
 
     </form>
+
+
+
+
 
 @endsection
 
@@ -124,5 +119,6 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
     <!-- Page specific js -->
+    <script src="js/dropdowns-enhancement.js"></script>
     <script src="js/data.js"></script>
 @endsection
