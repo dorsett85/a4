@@ -1,26 +1,19 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
+    // Add datepicker to start and end date inputs
     var date = new Date();
-    var plotDiv = document.getElementById('plotDiv');
 
-    $( "#plotform" ).validate();
+    $("#startDate, #endDate").datepicker({
+     maxDate: 0,
+     buttonText: "Choose",
+     changeYear: true,
+     yearRange: "1955:" + date.getFullYear()
+     });
 
-    $( "#startDate, #endDate" ).datepicker({
-        maxDate: 0,
-        buttonText: "Choose",
-        changeYear: true,
-        yearRange: "1955:" + date.getFullYear(),
-        onClose: function() {
-            $( this ).valid();
-        }
-    });
-
-    // Plotly chart
-    $('#plotBtn').click(function(e) {
+    // Add Plotly chart
+    $('#plotBtn').click(function (e) {
         event.preventDefault();
-
-        var $boxes = $('input[name=chk]:checked');
-        console.log($boxes.length);
+        var plotDiv = document.getElementById('plotDiv');
 
         // Create Quandle url query based on user input
         var urlStart = 'https://www.quandl.com/api/v3/datasets/';
@@ -33,28 +26,30 @@ $(document).ready(function() {
         var apiKey = 'api_key=ZNUBmiZ3d-zMyLGBxyUt';
 
         // Full Quandl API url call
-        var quandlUrl =  urlStart + quandlCode + '/data.csv?' + transform + column + startDate + endDate + collapse + apiKey;
+        var quandlUrl = urlStart + quandlCode + '/data.csv?' + transform + column + startDate + endDate + collapse + apiKey;
         console.log(quandlUrl);
 
-        Plotly.d3.csv(quandlUrl, function(rows){
+        // Plot data
+        Plotly.d3.csv(quandlUrl, function (rows) {
             var trace = {
                 type: 'scatter',                    // set the chart type
                 mode: 'lines',                      // connect points with lines
-                x: rows.map(function(row){          // set the x-data
+                x: rows.map(function (row) {          // set the x-data
                     return row['Date'];
                 }),
-                y: rows.map(function(row){          // set the x-data
+                y: rows.map(function (row) {          // set the x-data
                     return row['Close'];
                 }),
-                name: $('#transform option:selected').text(),
                 line: {                             // set the width of the line.
                     width: 1
-                },
+                }
             };
 
             var layout = {
                 title: $('#company').val(),
-                yaxis: {title: $('#transform option:selected').text()},       // set the y axis title
+                yaxis: {
+                    title: $('#transform option:selected').text()
+                },       // set the y axis title
                 xaxis: {
                     showgrid: false,                  // remove the x-axis grid lines
                     tickformat: "%B, %Y"              // customize the date format to "month, day"
@@ -64,15 +59,19 @@ $(document).ready(function() {
                 }
             };
 
-            Plotly.plot(plotDiv, [trace], layout, {showLink: false});
+            Plotly.newPlot(plotDiv, [trace], layout, {showLink: false});
+            $('#tagDiv').show();
+
         });
+
     });
 
-    //Plotly reset
-    $('#resetBtn').click(function(e) {
+    // Plotly reset
+    $('#resetBtn').click(function (e) {
         event.preventDefault();
 
         Plotly.purge(plotDiv);
+        $('#tagDiv').hide();
     });
 
 

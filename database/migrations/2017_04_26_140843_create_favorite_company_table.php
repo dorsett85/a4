@@ -27,7 +27,6 @@ class CreateFavoriteCompanyTable extends Migration
             $table->string('sector');
             $table->string('industry_category');
             $table->string('industry_group');
-            $table->string('strategy')->nullable();
 
         });
 

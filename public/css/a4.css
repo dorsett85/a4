@@ -39,7 +39,7 @@ header div {
 }
 
 .nav-pills > li.active > a {
-    background: #800408;
+    background: linear-gradient(rgba(128, 4, 8, 0.67), #800408);
 }
 
 .nav-pills > li.active > a:hover {
@@ -90,11 +90,12 @@ hr {
     box-shadow: 0px 0px 5px 1px;
 }
 
-.compareDropdown {
-    max-width: 200px;
-}
 #plotDiv {
     width: 100%;
+}
+
+#tagDiv {
+    display: none;
 }
 
 footer {

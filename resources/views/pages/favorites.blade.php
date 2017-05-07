@@ -24,7 +24,7 @@
                 <div>
                     <b>Symbol</b>: {{ $value['ticker'] }}<br>
                     <b>Exchange</b>: {{ $value['stock_exchange'] }}<br>
-                    <b>Company URL</b>: <a href="{{$value['company_url'] }}"
+                    <b>Company URL</b>: <a href="{{$value['company_url'] }}" class="companyLink"
                                            target="_blank">{{ $value['company_url'] }}</a><br>
                     <b>State Headquarters</b>: {{ $value['hq_state'] }} <br>
                     <b>Sector</b>: {{ $value['sector'] }}<br>
@@ -62,4 +62,9 @@
         <h4>You have not selected any companies to track yet.</h4>
     @endif
 
+@endsection
+
+@section('pageScript')
+    <!-- local js -->
+    <script src="js/companyUrl.js"></script>
 @endsection

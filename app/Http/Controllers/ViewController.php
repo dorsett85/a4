@@ -28,10 +28,18 @@ class ViewController extends StockController
     public function search()
     {
 
-        $company = $this->isPosted('company');
+        if (empty(Input::old('searchTerm'))) {
+            $searchResults = null;
+            $searchTerm = null;
+        } else {
+            $searchTerm = Input::old('searchTerm');
+            $searchResults = $this->companyInfo();
+        }
 
         return view('pages.search')->with([
-            'company' => $company
+            //'searchResults' => $searchResults,
+            'searchTerm' => $searchTerm,
+            'searchResults' => $searchResults
         ]);
 
     }
@@ -46,12 +54,12 @@ class ViewController extends StockController
         // Validate form
         $this->errorMsgs();
 
-        $company = $this->isPosted('company');
+        $searchTerm = $this->request->has('searchTerm') ? $this->request->searchTerm : '';
         $searchResults = $this->companyInfo();
 
         return view('pages.search')->with([
             'searchResults' => $searchResults,
-            'company' => $company
+            'searchTerm' => $searchTerm
         ]);
 
     }
@@ -65,7 +73,7 @@ class ViewController extends StockController
 
         $this->addFavorite();
 
-        return redirect('/search');
+        return redirect('/search')->withInput();
 
     }
 
@@ -75,6 +83,9 @@ class ViewController extends StockController
      */
     public function showFavorites()
     {
+
+        // Remove session ticker variable for when user goes back to data view
+        Session::pull('ticker');
 
         $favorites = Favorite::orderBy('company_name')->get();
 
@@ -111,27 +122,23 @@ class ViewController extends StockController
     public function selectData()
     {
 
-        // Check if old redirected value after updating tags exists
-        $ticker = (is_null(Input::old('ticker'))) ? $this->request->ticker : Input::old('ticker');
+        // Add session variables if they don't exist
+        if (Session::has('ticker')) {
+            $ticker = Session::get('ticker', $this->request->ticker);
+        } else {
+            Session::push('ticker', $this->request->ticker);
+            $ticker = Session::get('ticker', $this->request->ticker);
+        }
 
-        // Get model data for form input
-        $companies = Company::all();
-        $allFavorites = Favorite::with('tags')->get();
-
-        $quandleCode = $companies->where('ticker', '=', $ticker)->first();
-
-        // Get Quandl codes for favorites companies
-        $favoriteDropdown = [];
-        foreach ($allFavorites as $favorite) {
-            foreach ($companies as $company) {
-                if ($favorite->ticker == $company->ticker & $favorite->ticker != $quandleCode->ticker) {
-                    $favoriteDropdown[] = ['company_name' => $favorite->company_name, 'quandl_code' => $company->quandl_code];
-                }
-            }
+        if (Session::has('data')) {
+            $data = Session::get('data', $this->request->data);
+        } else {
+            Session::push('data', $this->request->data);
+            $data = Session::get('data', $this->request->data);
         }
 
         // Get array of tags for company and array of all tags
-        $favorite = $allFavorites->where('ticker', '=', $ticker)->first();
+        $favorite = Favorite::with('tags')->where('ticker', '=', $ticker)->first();
 
         $tagsForThisCompany = [];
         foreach ($favorite->tags as $tag) {
@@ -140,14 +147,14 @@ class ViewController extends StockController
 
         $tagsForCheckboxes = Tag::getTagsForCheckboxes();
 
-
+        $quandleCode = Company::where('ticker', '=', $ticker)->first();
 
         return view('pages.data')->with([
             'quandlCode' => $quandleCode->quandl_code,
             'company' => $favorite,
-            'favoriteDropdown' => $favoriteDropdown,
             'tagsForCheckboxes' => $tagsForCheckboxes,
             'tagsForThisCompany' => $tagsForThisCompany,
+            'data' => $data
         ]);
 
     }
@@ -161,7 +168,7 @@ class ViewController extends StockController
 
         $this->syncTags();
 
-        return redirect('/data')->withInput();
+        return redirect('/data');
 
     }
 

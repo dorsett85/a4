@@ -15,7 +15,7 @@
 
         <div class="form-group">
             <label for="company">Enter company (partial matches accepted)</label>
-            <input type="text" name="company" id="company" class="form-control" value="{{ old('company', $company) }}"
+            <input type="text" name="searchTerm" id="company" class="form-control" value="{{ old('searchTerm', $searchTerm) }}"
                    autofocus>
         </div>
         <button type="submit" class="btn btn-primary">Search</button>
@@ -39,10 +39,10 @@
         </div>
     @endif
 
-    @if(!empty($company))
+    @if(!empty($searchTerm))
         <p class="spaceAbove">
             Top {{ count($searchResults) }} result{{ (count($searchResults) > 1) ? 's' : '' }}
-            for '{{ $company }}', ordered alphabetically:
+            for '{{ $searchTerm }}', ordered alphabetically:
         </p>
         @foreach($searchResults as $key => $value)
             <div>
@@ -54,6 +54,7 @@
                             <input type="hidden" name="{{ $index }}" value="{{ $item }}">
                         @endforeach
                         <input type="submit" class="btn-xs btn-success spaceBelow" value="Add to Favorites">
+                        <input type="hidden" name="searchTerm" value="{{ $searchTerm }}">
                     </form>
                 @else
                     <button type="button" class="btn-xs btn-danger spaceBelow disabled">Already Added to Favorites
@@ -62,7 +63,7 @@
                 <div>
                     <b>Symbol</b>: {{ $value['ticker'] }}<br>
                     <b>Exchange</b>: {{ $value['stock_exchange'] }}<br>
-                    <b>Company URL</b>: <a href="{{$value['company_url'] }}"
+                    <b>Company URL</b>: <a href="{{$value['company_url'] }}" class="companyLink"
                                            target="_blank">{{ $value['company_url'] }}</a><br>
                     <b>State Headquarters</b>: {{ $value['hq_state'] }} <br>
                     <b>Sector</b>: {{ $value['sector'] }}<br>
@@ -78,9 +79,9 @@
         @endforeach
     @endif
 
-
 @endsection
 
 @section('pageScript')
-    <script src="js/search.js"></script>
+    <!-- local js -->
+    <script src="js/companyUrl.js"></script>
 @endsection

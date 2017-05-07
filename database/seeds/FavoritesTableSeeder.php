@@ -21,8 +21,7 @@ class FavoritesTableSeeder extends Seeder
             'hq_state' => 'Massachusetts ',
             'sector' => 'Healthcare',
             'industry_category' => 'Drugs ',
-            'industry_group' => 'Laravel',
-            'strategy' => 'Biotechnology ',
+            'industry_group' => 'Biotechnology',
         ]);
     }
 }

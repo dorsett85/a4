@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use App\Company;
 use App\Favorite;
 use Session;
@@ -59,7 +59,7 @@ class stockController extends Controller
     {
 
         $errors = [
-            'company' => 'required|min:3|company',
+            'searchTerm' => 'required|min:3|company',
         ];
 
         $errorMessages = [
@@ -88,7 +88,7 @@ class stockController extends Controller
         ));
 
         // Match user input to the companies table
-        $name = $this->request->company;
+        $name = ($this->request->has('searchTerm')) ? $this->request->searchTerm : Input::old('searchTerm');
         $matches = Company::where('company_name', 'like', "%$name%")->orderBy('company_name')->get();
 
         // Retrieve favorites table to compare if company in search results has already been added
