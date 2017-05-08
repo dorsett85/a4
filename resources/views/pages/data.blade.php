@@ -8,6 +8,10 @@
     <!-- JQuery UI -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
 
+    <!-- Font Awesome -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
     <!-- Page specific css -->
     <link rel="stylesheet" href="css/dropdowns-enhancement.css">
 @endsection
@@ -54,7 +58,9 @@
 
         <div class="btn-group btn-group-justified">
             <div class="btn-group">
-                <button id="plotBtn" class="btn btn-info">New Interactive Chart</button>
+                <button id="plotBtn" class="btn btn-info">
+                    New Interactive Chart <i id="fa-spinner"></i>
+                </button>
             </div>
             <div class="btn-group">
                 <button id="resetBtn" class="btn btn-danger">Start Over</button>

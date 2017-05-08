@@ -13,6 +13,7 @@ $(document).ready(function () {
     // Add Plotly chart
     $('#plotBtn').click(function (e) {
         event.preventDefault();
+        $('#fa-spinner').addClass('fa fa-spinner fa-spin');
         var plotDiv = document.getElementById('plotDiv');
 
         // Create Quandle url query based on user input
@@ -61,7 +62,7 @@ $(document).ready(function () {
 
             Plotly.newPlot(plotDiv, [trace], layout, {showLink: false});
             $('#tagDiv').show();
-
+            $('#fa-spinner').removeClass('fa fa-spinner fa-spin');
         });
 
     });
