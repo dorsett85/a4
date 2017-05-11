@@ -1,13 +1,13 @@
 @extends('master')
 
 @section('title')
-    Favorites Companies
+    Favorites Stocks
 @endsection
 
 @section('body')
 
     <h1 id="favHead">
-        Favorite companies
+        Favorite Stocks
     </h1>
 
     @if(Session::get('message') != null)
@@ -40,8 +40,7 @@
                 <form class="inlineBtn" action="/data" method="post">
                     {{ csrf_field() }}
                     <button class="btn-xs btn-success favoriteInfo">Description</button>
-                    <input type="hidden" name="ticker" value="{{ $value->ticker }}">
-                    <input type="hidden" name="data" value="data">
+                    <input type="hidden" name="firstTicker" value="{{ $value->ticker }}">
                     <button type="submit" class="btn-xs btn-primary">
                         Get Data
                     </button>
@@ -59,7 +58,7 @@
             <hr>
         @endforeach
     @else
-        <h4>You have not selected any companies to track yet.</h4>
+        <h4>You have not selected any stocks to track yet.</h4>
     @endif
 
 @endsection

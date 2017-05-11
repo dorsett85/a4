@@ -19,7 +19,7 @@
 @section('body')
 
     <h1 id="dataHead">
-        Create chart for {{ $company->company_name }}
+        Create Chart for {{ $company->company_name }}
     </h1>
 
     <form id="plotform">
@@ -67,7 +67,6 @@
             </div>
         </div>
 
-
         <input type="hidden" id="company" value="{{ $company->company_name }}">
         <input type="hidden" id="quandlCode" value="{{ $quandlCode }}">
 
@@ -79,7 +78,7 @@
 
     <div id="tagDiv">
         <h3>
-            Add tags
+            Add/Remove Tags
         </h3>
 
         <form action="/tags" method="post">
@@ -87,8 +86,8 @@
 
             <div class="btn-group btn-group-justified">
                 <div class="btn-group">
-                    <button data-toggle="dropdown" class="btn btn-info dropdown-toggle" data-placeholder="Add Tags">
-                        Add Tags<span class="caret"></span></button>
+                    <button data-toggle="dropdown" class="btn btn-info dropdown-toggle" data-placeholder="Add/Remove Tags">
+                        Add/Remove Tags<span class="caret"></span></button>
                     <ul class="dropdown-menu pull-top">
                         @foreach($tagsForCheckboxes as $index => $tag)
                             <li><input type="checkbox" id="{{ $tag }}" name="tags[]" class="form-check-input"
@@ -100,9 +99,9 @@
                     </ul>
                 </div>
                 <div class="btn-group">
-                    <input type="hidden" name="ticker" value="{{ $company->ticker }}">
+                    <input type="hidden" name="tagTicker" value="{{ $company->ticker }}">
                     <button type="submit" class="btn btn-success" name="id" value="{{ $company->id }}">Submit
-                        tags (*this will
+                        Tags (*this will
                         reset your plot)
                     </button>
                 </div>

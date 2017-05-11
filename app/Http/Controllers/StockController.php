@@ -157,6 +157,25 @@ class stockController extends Controller
 
 
     /*
+     * Get appropriate session ticker for data view
+     */
+    public function getTicker()
+    {
+
+        if (Session::has('firstTicker')) {
+            $ticker = Session::pull('firstTicker');
+        } else if (Session::has('switchTicker')) {
+            $ticker = Session::get('switchTicker');
+        } else {
+            $ticker = Session::get('tagTicker');
+        }
+
+        return $ticker;
+
+    }
+
+
+    /*
      * Add/remove tags from tags table
      */
     public function syncTags()

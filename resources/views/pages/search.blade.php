@@ -1,20 +1,20 @@
 @extends('master')
 
 @section('title')
-    Search Companies
+    Search Stocks
 @endsection
 
 @section('body')
 
     <h1 id="searchHead">
-        Search Public Companies
+        Search Public Stocks
     </h1>
 
     <form id="searchForm" method="post" action="/search">
         {{ csrf_field() }}
 
         <div class="form-group">
-            <label for="company">Enter company (partial matches accepted)</label>
+            <label for="company">Enter company/fund name (partial matches accepted)</label>
             <input type="text" name="searchTerm" id="company" class="form-control" value="{{ old('searchTerm', $searchTerm) }}"
                    autofocus>
         </div>

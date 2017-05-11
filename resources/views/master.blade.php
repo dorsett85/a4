@@ -3,7 +3,7 @@
 <head>
 
     <title>
-        @yield('title', 'Company Tracker')
+        @yield('title', 'Stock Tracker')
     </title>
     <meta charset="utf-8">
 
@@ -21,7 +21,7 @@
 
 <header>
     <div>
-        <h1>Company Tracker</h1>
+        <h1>Stock Tracker</h1>
         <h5>
             Your source for publicly traded stock information
         </h5>
@@ -39,14 +39,25 @@
                         <a class="nav-link" id="home" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="search" href="/search">Search Companies</a>
+                        <a class="nav-link" id="search" href="/search">Search Stocks</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="favorites" href="/favorites">Favorites</a>
                     </li>
                     @if(isset($data))
-                        <li class="nav-item">
-                            <a class="nav-link" id="data">Data</a>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" id="data" data-toggle="dropdown" href="#">
+                                Other Data <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                @foreach($otherFavorites as $item)
+                                    <li>
+                                        <a class="nav-link dropdown-item" href="data/{{ $item->ticker }}">
+                                            {{ $item->company_name }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
                         </li>
                     @endif
                 </ul>

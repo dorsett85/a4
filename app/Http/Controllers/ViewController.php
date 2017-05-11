@@ -84,9 +84,6 @@ class ViewController extends StockController
     public function showFavorites()
     {
 
-        // Remove session ticker variable for when user goes back to data view
-        Session::pull('ticker');
-
         $favorites = Favorite::orderBy('company_name')->get();
 
         $allFavoritesTags = Favorite::getTagsForFavorites();
@@ -122,22 +119,15 @@ class ViewController extends StockController
     public function selectData()
     {
 
-        // Add session variables if they don't exist
-        if (Session::has('ticker')) {
-            $ticker = Session::get('ticker', $this->request->ticker);
-        } else {
-            Session::push('ticker', $this->request->ticker);
-            $ticker = Session::get('ticker', $this->request->ticker);
+        if ($this->request->has('firstTicker')) {
+            Session::push('firstTicker', $this->request->firstTicker);
         }
 
-        if (Session::has('data')) {
-            $data = Session::get('data', $this->request->data);
-        } else {
-            Session::push('data', $this->request->data);
-            $data = Session::get('data', $this->request->data);
-        }
+        $ticker = $this->getTicker();
+        $data = 'set';
 
         // Get array of tags for company and array of all tags
+        $otherFavorites = Favorite::where('ticker', '!=', $ticker)->get();
         $favorite = Favorite::with('tags')->where('ticker', '=', $ticker)->first();
 
         $tagsForThisCompany = [];
@@ -151,6 +141,7 @@ class ViewController extends StockController
 
         return view('pages.data')->with([
             'quandlCode' => $quandleCode->quandl_code,
+            'otherFavorites' => $otherFavorites,
             'company' => $favorite,
             'tagsForCheckboxes' => $tagsForCheckboxes,
             'tagsForThisCompany' => $tagsForThisCompany,
@@ -161,12 +152,35 @@ class ViewController extends StockController
 
 
     /*
-     * Update tags and redirect to
+     * Switch companies on data view page
+     */
+    public function switchCompany($switchTicker)
+    {
+
+        if (Session::has('switchTicker')) {
+            Session::pull('switchTicker');
+        }
+        Session::push('switchTicker', $switchTicker);
+
+        return redirect('/data');
+
+    }
+
+
+    /*
+     * Update tags and redirect to data view page
      */
     public function updateTags()
     {
 
         $this->syncTags();
+
+        if (Session::has('tagTicker')) {
+            Session::pull('tagTicker');
+        }
+        Session::push('tagTicker', $this->request->tagTicker);
+
+
 
         return redirect('/data');
 

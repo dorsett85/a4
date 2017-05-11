@@ -11,6 +11,7 @@ Route::get('/favorites', 'ViewController@showFavorites');
 Route::post('/favorites', 'ViewController@removeCompany');
 
 Route::any('/data', 'ViewController@selectData');
+Route::get('/data/{switchTicker}', 'ViewController@switchCompany');
 
 Route::post('/tags', 'ViewController@updateTags');
 
