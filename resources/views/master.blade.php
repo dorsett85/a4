@@ -50,13 +50,21 @@
                                 Other Data <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                @foreach($otherFavorites as $item)
+                                @if($otherFavorites->isEmpty())
                                     <li>
-                                        <a class="nav-link dropdown-item" href="data/{{ $item->ticker }}">
-                                            {{ $item->company_name }}
+                                        <a class="nav-link dropdown-item">
+                                            No Other Favorites
                                         </a>
                                     </li>
-                                @endforeach
+                                @else
+                                    @foreach($otherFavorites as $item)
+                                        <li>
+                                            <a class="nav-link dropdown-item" href="data/{{ $item->ticker }}">
+                                                {{ $item->company_name }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                @endif
                             </ul>
                         </li>
                     @endif

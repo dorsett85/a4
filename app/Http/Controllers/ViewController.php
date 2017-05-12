@@ -127,7 +127,7 @@ class ViewController extends StockController
         $data = 'set';
 
         // Get array of tags for company and array of all tags
-        $otherFavorites = Favorite::where('ticker', '!=', $ticker)->get();
+        $otherFavorites = Favorite::orderBy('company_name')->where('ticker', '!=', $ticker)->get();
         $favorite = Favorite::with('tags')->where('ticker', '=', $ticker)->first();
 
         $tagsForThisCompany = [];
