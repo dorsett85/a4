@@ -89,7 +89,7 @@
             Quandle
         </div>
         <a href="https://www.quandl.com/" target="_blank">
-            <img src="images/quandl-logo.png">
+            <img src="images/quandl-logo.png" alt="quandl-logo">
         </a>
     </div>
     <div id="intrinoImg" class="creditImgs">
@@ -97,7 +97,7 @@
             Intrinio
         </div>
         <a href="https://intrinio.com/" target="_blank">
-            <img src="images/intrinio-logo.jpg">
+            <img src="images/intrinio-logo.jpg" alt="intrinio-logo">
         </a>
     </div>
 </footer>

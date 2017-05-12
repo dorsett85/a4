@@ -90,10 +90,10 @@
                         Add/Remove Tags<span class="caret"></span></button>
                     <ul class="dropdown-menu pull-top">
                         @foreach($tagsForCheckboxes as $index => $tag)
-                            <li><input type="checkbox" id="{{ $tag }}" name="tags[]" class="form-check-input"
+                            <li><input type="checkbox" id="{{ (($tag == 'bo derek') ? 'boDerek' : $tag) }}" name="tags[]" class="form-check-input"
                                        value="{{ $index }}"
                                         {{ (in_array($tag, $tagsForThisCompany)) ? 'CHECKED' : '' }}><label
-                                        for="{{ $tag}}">{{ $tag }}</label>
+                                        for="{{ (($tag == 'bo derek') ? 'boDerek' : $tag) }}">{{ $tag }}</label>
                             </li>
                         @endforeach
                     </ul>
