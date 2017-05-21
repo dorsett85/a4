@@ -5,15 +5,8 @@
 @endsection
 
 @section('pageStyle')
-    <!-- JQuery UI -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
-
-    <!-- Font Awesome -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
     <!-- Page specific css -->
-    <link rel="stylesheet" href="css/dropdowns-enhancement.css">
+    <link rel="stylesheet" href="/css/dropdowns-enhancement.css">
 @endsection
 
 @section('body')
@@ -24,7 +17,7 @@
 
     <form id="plotform">
 
-        <div class="form-group col-sm-7">
+        <div class="form-group col-sm-6">
             <label for="transform">Data Type</label>
             <select id="transform" class="form-control">
                 <option value="none">Closing Price</option>
@@ -34,7 +27,7 @@
             </select>
         </div>
 
-        <div class="form-group col-sm-5">
+        <div class="form-group col-sm-6">
             <label for="collapse">Interval</label>
             <select id="collapse" class="form-control">
                 <option value="daily">Daily</option>
@@ -45,26 +38,10 @@
             </select>
         </div>
 
-        <div class="form-group col-sm-6">
-            <label for="startDate">Start Date</label>
-            <input type="text" id="startDate" class="form-control"
-                   placeholder="Leave blank for earliest available data">
-        </div>
-
-        <div class="form-group col-sm-6">
-            <label for="endDate">End Date</label>
-            <input type="text" id="endDate" class="form-control" placeholder="Today">
-        </div>
-
-        <div class="btn-group btn-group-justified">
-            <div class="btn-group">
-                <button id="plotBtn" class="btn btn-info">
-                    New Interactive Chart <i id="fa-spinner"></i>
-                </button>
-            </div>
-            <div class="btn-group">
-                <button id="resetBtn" class="btn btn-danger">Start Over</button>
-            </div>
+        <div class="text-center">
+            <button id="plotBtn" class="btn btn-primary">
+                Create Interactive Chart <i class="fa fa-line-chart" aria-hidden="true"></i> <i id="fa-spinner"></i>
+            </button>
         </div>
 
         <input type="hidden" id="company" value="{{ $company->company_name }}">
@@ -86,11 +63,15 @@
 
             <div class="btn-group btn-group-justified">
                 <div class="btn-group">
-                    <button data-toggle="dropdown" class="btn btn-info dropdown-toggle" data-placeholder="Add/Remove Tags">
-                        Add/Remove Tags<span class="caret"></span></button>
+                    <button data-toggle="dropdown" class="btn btn-info dropdown-toggle"
+                            data-placeholder="Add/Remove Tags">
+                        Add/Remove Tags <i class="fa fa-tags" aria-hidden="true"></i>
+                        <i class="fa fa-caret-up" aria-hidden="true"></i>
+                    </button>
                     <ul class="dropdown-menu pull-top">
                         @foreach($tagsForCheckboxes as $index => $tag)
-                            <li><input type="checkbox" id="{{ (($tag == 'bo derek') ? 'boDerek' : $tag) }}" name="tags[]" class="form-check-input"
+                            <li><input type="checkbox" id="{{ (($tag == 'bo derek') ? 'boDerek' : $tag) }}"
+                                       name="tags[]" class="form-check-input"
                                        value="{{ $index }}"
                                         {{ (in_array($tag, $tagsForThisCompany)) ? 'CHECKED' : '' }}><label
                                         for="{{ (($tag == 'bo derek') ? 'boDerek' : $tag) }}">{{ $tag }}</label>
@@ -99,10 +80,9 @@
                     </ul>
                 </div>
                 <div class="btn-group">
-                    <input type="hidden" name="tagTicker" value="{{ $company->ticker }}">
-                    <button type="submit" class="btn btn-success" name="id" value="{{ $company->id }}">Submit
-                        Tags (*this will
-                        reset your plot)
+                    <input type="hidden" name="ticker" value="{{ $company->ticker }}">
+                    <button type="submit" class="btn btn-success" name="id" value="{{ $company->id }}">
+                        Submit Tags (*this will reset your plot) <i class="fa fa-check" aria-hidden="true"></i>
                     </button>
                 </div>
             </div>
@@ -115,13 +95,10 @@
 @endsection
 
 @section('pageScript')
-    <!-- JQuery UI -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
     <!-- Plotly -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
     <!-- local js -->
-    <script src="js/dropdowns-enhancement.js"></script>
-    <script src="js/data.js"></script>
+    <script src="/js/dropdowns-enhancement.js"></script>
+    <script src="/js/data.js"></script>
 @endsection

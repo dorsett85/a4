@@ -10,8 +10,7 @@ Route::post('/add', 'ViewController@saveFavorite');
 Route::get('/favorites', 'ViewController@showFavorites');
 Route::post('/favorites', 'ViewController@removeCompany');
 
-Route::any('/data', 'ViewController@selectData');
-Route::get('/data/{switchTicker}', 'ViewController@switchCompany');
+Route::get('/data/{ticker}', 'ViewController@selectData');
 
 Route::post('/tags', 'ViewController@updateTags');
 

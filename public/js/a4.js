@@ -1,11 +1,13 @@
 $(document).ready(function() {
 
     // Set active navigation li
-    var activePill = $(".nav-link[href='" + window.location.pathname + "']").parent();
-    activePill.addClass('active');
-    var dataPill = $("#data").parent();
-    dataPill.addClass('active');
-
+    var subPath = window.location.pathname;
+    if (subPath.substring(0, 5) === '/data') {
+        $('#data').parent().addClass('active');
+    } else {
+        var activePill = $(".nav-link[href='" + subPath + "']").parent();
+        activePill.addClass('active');
+    }
 
     // Toggle company description
 

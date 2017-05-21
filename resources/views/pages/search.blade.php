@@ -18,7 +18,7 @@
             <input type="text" name="searchTerm" id="company" class="form-control" value="{{ old('searchTerm', $searchTerm) }}"
                    autofocus>
         </div>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <button type="submit" class="btn btn-primary">Search <i class="fa fa-search" aria-hidden="true"></i></button>
 
     </form>
 
@@ -53,11 +53,11 @@
                         @foreach($value as $index => $item)
                             <input type="hidden" name="{{ $index }}" value="{{ $item }}">
                         @endforeach
-                        <input type="submit" class="btn-xs btn-success spaceBelow" value="Add to Favorites">
+                        <input type="submit" class="btn btn-sm btn-success spaceBelow" value="Add to Favorites">
                         <input type="hidden" name="searchTerm" value="{{ $searchTerm }}">
                     </form>
                 @else
-                    <button type="button" class="btn-xs btn-danger spaceBelow disabled">Already Added to Favorites
+                    <button type="button" class="btn btn-sm btn-danger spaceBelow disabled">Already Added to Favorites
                     </button>
                 @endif
                 <div>
@@ -70,7 +70,7 @@
                     <b>Industry Category</b>: {{ $value['industry_category'] }} <br>
                     <b>Industry Group</b>: {{ $value['industry_group'] }} <br>
                 </div>
-                <button class="btn-xs btn-info searchInfo">Description</button>
+                <button class="btn btn-sm btn-info searchInfo">Description</button>
                 <div class="shortDescription">
                     {{ $value['short_description'] }}
                 </div>

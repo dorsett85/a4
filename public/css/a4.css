@@ -72,11 +72,6 @@ header div {
     margin-top: .5em;
 }
 
-.inlineBtn {
-    display: inline-block;
-    margin-top: .5em;
-}
-
 .shortDescription {
     display: none;
     margin-top: 1em;
@@ -88,6 +83,10 @@ hr {
     background-color: #000000;
     border: none;
     box-shadow: 0px 0px 5px 1px;
+}
+
+#plotBtn {
+    margin: 0 auto;
 }
 
 #plotDiv {

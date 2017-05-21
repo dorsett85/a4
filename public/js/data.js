@@ -1,15 +1,5 @@
 $(document).ready(function () {
 
-    // Add datepicker to start and end date inputs
-    var date = new Date();
-
-    $("#startDate, #endDate").datepicker({
-     maxDate: 0,
-     buttonText: "Choose",
-     changeYear: true,
-     yearRange: "1955:" + date.getFullYear()
-     });
-
     // Add Plotly chart
     $('#plotBtn').click(function (e) {
         event.preventDefault();
@@ -21,13 +11,11 @@ $(document).ready(function () {
         var quandlCode = $('#quandlCode').val();
         var column = 'column_index[]=4&';
         var transform = 'transform=' + $('#transform').val() + '&';
-        var startDate = 'start_date=' + $('#startDate').val() + '&';
-        var endDate = 'end_date=' + $('#endDate').val() + '&';
         var collapse = 'collapse=' + $('#collapse').val() + '&';
         var apiKey = 'api_key=ZNUBmiZ3d-zMyLGBxyUt';
 
         // Full Quandl API url call
-        var quandlUrl = urlStart + quandlCode + '/data.csv?' + transform + column + startDate + endDate + collapse + apiKey;
+        var quandlUrl = urlStart + quandlCode + '/data.csv?' + transform + column + collapse + apiKey;
         console.log(quandlUrl);
 
         // Plot data
@@ -65,14 +53,6 @@ $(document).ready(function () {
             $('#fa-spinner').removeClass('fa fa-spinner fa-spin');
         });
 
-    });
-
-    // Plotly reset
-    $('#resetBtn').click(function (e) {
-        event.preventDefault();
-
-        Plotly.purge(plotDiv);
-        $('#tagDiv').hide();
     });
 
 

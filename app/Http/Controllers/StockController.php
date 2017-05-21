@@ -27,15 +27,6 @@ class stockController extends Controller
 
 
     /*
-     * Function to check if post data is submitted and leave it blank if it's not
-     */
-    public function isPosted($value)
-    {
-        return $this->request->has($value) ? $this->request->$value : '';
-    }
-
-
-    /*
      * Custom validation to check if user input matches a company from the companies table
      */
     public function validateCompany($attribute, $value, $parameters, $validator)
@@ -140,37 +131,18 @@ class stockController extends Controller
     {
 
         $favorite = new Favorite;
-        $favorite->ticker = $this->request->input('ticker');
-        $favorite->company_name = $this->request->input('company');
-        $favorite->stock_exchange = $this->request->input('stock_exchange');
-        $favorite->short_description = $this->request->input('short_description');
-        $favorite->company_url = $this->request->input('company_url');
-        $favorite->hq_state = $this->request->input('hq_state');
-        $favorite->sector = $this->request->input('sector');
-        $favorite->industry_category = $this->request->input('industry_category');
-        $favorite->industry_group = $this->request->input('industry_group');
+        $favorite->ticker = $this->request->ticker;
+        $favorite->company_name = $this->request->company;
+        $favorite->stock_exchange = $this->request->stock_exchange;
+        $favorite->short_description = $this->request->short_description;
+        $favorite->company_url = $this->request->company_url;
+        $favorite->hq_state = $this->request->hq_state;
+        $favorite->sector = $this->request->sector;
+        $favorite->industry_category = $this->request->industry_category;
+        $favorite->industry_group = $this->request->industry_group;
         $favorite->save();
 
         Session::flash('message', $this->request->company . ' was added to your favorites.');
-
-    }
-
-
-    /*
-     * Get appropriate session ticker for data view
-     */
-    public function getTicker()
-    {
-
-        if (Session::has('firstTicker')) {
-            $ticker = Session::pull('firstTicker');
-        } else if (Session::has('switchTicker')) {
-            $ticker = Session::get('switchTicker');
-        } else {
-            $ticker = Session::get('tagTicker');
-        }
-
-        return $ticker;
 
     }
 

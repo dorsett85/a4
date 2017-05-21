@@ -13,7 +13,7 @@
     <div>
         <h4>
             Start by <a href="/search">searching</a> for stocks to track. Remember to click
-            <button class="btn-xs btn-success">Add to Favorites</button>.
+            <button class="btn btn-xs btn-success">Add to Favorites</button>.
         </h4>
         <h4>
             Once saved, view your favorites <a href="/favorites">here</a>.

@@ -37,23 +37,24 @@
                         @endif
                     @endforeach
                 </div>
-                <form class="inlineBtn" action="/data" method="post">
-                    {{ csrf_field() }}
-                    <button class="btn-xs btn-success favoriteInfo">Description</button>
-                    <input type="hidden" name="firstTicker" value="{{ $value->ticker }}">
-                    <button type="submit" class="btn-xs btn-primary">
-                        Get Data
-                    </button>
-                </form>
-                <form class="inlineBtn" action="/favorites" method="post">
-                    {{ csrf_field() }}
-                    <button type="submit" class="btn-xs btn-danger" name="remove" value="{{ $value->id }}">
-                        Remove From Favorites
-                    </button>
-                </form>
+
+                <div class="btn-toolbar spaceAbove">
+                    <button class="btn btn-sm btn-info favoriteInfo">Description</button>
+                    <a href="/data/{{ $value->ticker }}" class="btn btn-sm btn-primary">
+                        Get Data <i class="fa fa-line-chart" aria-hidden="true"></i>
+                    </a>
+                </div>
                 <div class="shortDescription">
                     {{ $value->short_description }}
                 </div>
+                <form class="spaceAbove" action="/favorites" method="post">
+                    {{ csrf_field() }}
+                    <button class="btn btn-sm btn-danger" name="remove" value="{{ $value->id }}">
+                        Remove From Favorites <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </form>
+
+
             </div>
             <hr>
         @endforeach

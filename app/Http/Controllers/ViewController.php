@@ -17,7 +17,11 @@ class ViewController extends StockController
     public function welcome()
     {
 
-        return view('pages.welcome');
+        $favoritesList = Favorite::orderBy('company_name')->get();
+
+        return view('pages.welcome')->with([
+            'favoritesList' => $favoritesList
+        ]);
 
     }
 
@@ -28,7 +32,7 @@ class ViewController extends StockController
     public function search()
     {
 
-        if (empty(Input::old('searchTerm'))) {
+        if (Session::has('errors')) {
             $searchResults = null;
             $searchTerm = null;
         } else {
@@ -36,8 +40,10 @@ class ViewController extends StockController
             $searchResults = $this->companyInfo();
         }
 
+        $favoritesList = Favorite::orderBy('company_name')->get();
+
         return view('pages.search')->with([
-            //'searchResults' => $searchResults,
+            'favoritesList' => $favoritesList,
             'searchTerm' => $searchTerm,
             'searchResults' => $searchResults
         ]);
@@ -57,7 +63,10 @@ class ViewController extends StockController
         $searchTerm = $this->request->has('searchTerm') ? $this->request->searchTerm : '';
         $searchResults = $this->companyInfo();
 
+        $favoritesList = Favorite::orderBy('company_name')->get();
+
         return view('pages.search')->with([
+            'favoritesList' => $favoritesList,
             'searchResults' => $searchResults,
             'searchTerm' => $searchTerm
         ]);
@@ -89,6 +98,7 @@ class ViewController extends StockController
         $allFavoritesTags = Favorite::getTagsForFavorites();
 
         return view('pages.favorites')->with([
+            'favoritesList' => $favorites,
             'favorites' => $favorites,
             'allFavoritesTags' => $allFavoritesTags,
         ]);
@@ -119,15 +129,11 @@ class ViewController extends StockController
     public function selectData()
     {
 
-        if ($this->request->has('firstTicker')) {
-            Session::push('firstTicker', $this->request->firstTicker);
-        }
-
-        $ticker = $this->getTicker();
+        $ticker = $this->request->ticker;
         $data = 'set';
 
         // Get array of tags for company and array of all tags
-        $otherFavorites = Favorite::orderBy('company_name')->where('ticker', '!=', $ticker)->get();
+        $favoritesList = Favorite::orderBy('company_name')->where('ticker', '!=', $ticker)->get();
         $favorite = Favorite::with('tags')->where('ticker', '=', $ticker)->first();
 
         $tagsForThisCompany = [];
@@ -141,28 +147,12 @@ class ViewController extends StockController
 
         return view('pages.data')->with([
             'quandlCode' => $quandleCode->quandl_code,
-            'otherFavorites' => $otherFavorites,
+            'favoritesList' => $favoritesList,
             'company' => $favorite,
             'tagsForCheckboxes' => $tagsForCheckboxes,
             'tagsForThisCompany' => $tagsForThisCompany,
             'data' => $data
         ]);
-
-    }
-
-
-    /*
-     * Switch companies on data view page
-     */
-    public function switchCompany($switchTicker)
-    {
-
-        if (Session::has('switchTicker')) {
-            Session::pull('switchTicker');
-        }
-        Session::push('switchTicker', $switchTicker);
-
-        return redirect('/data');
 
     }
 
@@ -174,15 +164,9 @@ class ViewController extends StockController
     {
 
         $this->syncTags();
+        $ticker = $this->request->ticker;
 
-        if (Session::has('tagTicker')) {
-            Session::pull('tagTicker');
-        }
-        Session::push('tagTicker', $this->request->tagTicker);
-
-
-
-        return redirect('/data');
+        return redirect('/data/' . $ticker);
 
     }
 
