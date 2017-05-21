@@ -47,8 +47,10 @@
                 <div class="shortDescription">
                     {{ $value->short_description }}
                 </div>
+                
                 <form class="spaceAbove" action="/favorites" method="post">
                     {{ csrf_field() }}
+
                     <button class="btn btn-sm btn-danger" name="remove" value="{{ $value->id }}">
                         Remove From Favorites <span class="glyphicon glyphicon-trash"></span>
                     </button>
