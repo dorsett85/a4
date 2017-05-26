@@ -34,9 +34,9 @@
 </header>
 
 <div class="container">
-    <div id="mainDiv" class="col-sm-10 col-sm-offset-1">
+    <div id="mainDiv" class="col-md-10 col-md-offset-1">
 
-        <div id="sidebar" class="col-sm-3">
+        <div id="sidebar" class="col-md-3">
             <ul class="nav nav-pills nav-stacked">
                 <li class="nav-item">
                     <a class="nav-link" id="home" href="/">Home</a>
@@ -72,7 +72,7 @@
             </ul>
         </div>
 
-        <div id="bodyDiv" class="col-sm-9">
+        <div id="bodyDiv" class="col-md-9">
             @yield('body')
         </div>
 
