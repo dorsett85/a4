@@ -84,7 +84,7 @@ class stockController extends Controller
 
         // Retrieve favorites table to compare if company in search results has already been added
         // If it has, change 'Add to Favorites' button
-        $favorites = Favorite::pluck('company_name')->toArray();
+        $favorites = Favorite::pluck('ticker')->toArray();
 
         // Function to check if search return fields are empty and leave blank if they are
         function isEmpty($value)
@@ -115,7 +115,7 @@ class stockController extends Controller
                 'industry_category' => isEmpty($json['industry_category']),
                 'industry_group' => isEmpty($json['industry_group']),
                 'short_description' => isEmpty($json['short_description']),
-                'duplicate' => in_array($item->company_name, $favorites) ? 'yes' : '',
+                'duplicate' => in_array($item->ticker, $favorites) ? 'yes' : '',
             ];
         }
 
