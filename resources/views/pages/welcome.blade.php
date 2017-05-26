@@ -1,7 +1,7 @@
 @extends('master')
 
 @section('title')
-    Company Tracker
+    Stock Tracker
 @endsection
 
 @section('body')
