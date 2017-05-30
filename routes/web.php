@@ -34,5 +34,4 @@ Route::group(['middleware' => 'auth'], function() {
 Route::get('/practice', 'practiceController@practice');
 
 
-
-
+Route::get('/random', 'RandomChartController@randomChart');
