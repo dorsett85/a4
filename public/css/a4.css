@@ -44,6 +44,7 @@ header div {
 
 .landingButton {
     background: linear-gradient(rgba(255, 255, 255, 0.67), #1f9cff);
+    margin-bottom: 5px;
 }
 
 .landingButton:hover {
@@ -62,10 +63,6 @@ header div {
 .companyPadding {
     padding-left: 5px;
     padding-right: 5px;
-}
-
-.noWrap {
-    white-space: nowrap;
 }
 
 #landingChart {

@@ -13,7 +13,7 @@
     </div>
 
     <div id="landingButtons">
-        <div class="noWrap">
+        <div>
             <div class="btn-group">
                 <div>
                     <a href="/login" class="btn btn-lg btn-default landingButton">Login</a>
@@ -52,7 +52,7 @@
         <div id="sampleCompanies">
         @foreach($landingInfo as $item)
                 <div class="companyPadding">
-                    <h4 class="noWrap">{{ $item['company'] }}</h4>
+                    <h4>{{ $item['company'] }}</h4>
                     <button class="btn btn-sm btn-success spaceBelow landingFavorite" value="Add to Favorites">
                         Add to Favorites
                     </button>
