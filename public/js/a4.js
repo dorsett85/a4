@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
     // Set active navigation li
     var subPath = window.location.pathname;
@@ -11,14 +11,20 @@ $(document).ready(function() {
 
     // Toggle company description
 
-        // On search page
-    $('.searchInfo').click(function(e) {
+    // On Landing Page
+    $('.landingInfo').click(function (e) {
         event.preventDefault();
         $(this).siblings('.shortDescription').toggle('slow');
     });
 
-        // on Favorites page
-    $('.favoriteInfo').click(function(e) {
+    // On search page
+    $('.searchInfo').click(function (e) {
+        event.preventDefault();
+        $(this).siblings('.shortDescription').toggle('slow');
+    });
+
+    // on Favorites page
+    $('.favoriteInfo').click(function (e) {
         event.preventDefault();
         $(this).parent().siblings('.shortDescription').toggle('slow');
     });

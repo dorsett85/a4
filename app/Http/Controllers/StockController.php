@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Input;
 use App\Company;
 use App\Favorite;
 use Session;
+use Auth;
 
 
 class stockController extends Controller
@@ -22,6 +23,55 @@ class stockController extends Controller
     {
 
         $this->request = $request;
+
+    }
+
+    /*
+     * Get sample company information to display on landing page
+     */
+    public function landingInfo()
+    {
+
+        // Set up Intrinio login information
+        $username = 'b7aac9b614877ef4b070cf462756d8bb';
+        $password = 'ebdf24e3287a1962c941ae9076a3127c';
+
+        $context = stream_context_create(array(
+            'http' => array(
+                'header' => "Authorization: Basic " . base64_encode("$username:$password")
+            )
+        ));
+
+        // Function to check if search return fields are empty and leave blank if they are
+        function isEmpty($value)
+        {
+            return (!empty($value)) ? $value : 'Information unavailable';
+        }
+
+        // Get 3 random companies
+        $landingRandom = Company::pluck('ticker')->shuffle()->toArray();
+        $sampleStocks = array_slice($landingRandom, 0, 3);
+
+        $landingInfo = [];
+
+        foreach ($sampleStocks as $item) {
+            $data = file_get_contents("https://api.intrinio.com/companies?ticker=" . $item, false, $context);
+            $json = json_decode($data, JSON_PRETTY_PRINT);
+
+            $landingInfo[$item] = [
+                'company' => isEmpty($json['name']),
+                'ticker' => isEmpty($json['ticker']),
+                'stock_exchange' => isEmpty($json['stock_exchange']),
+                'company_url' => isEmpty($json['company_url']),
+                'hq_state' => isEmpty($json['hq_state']),
+                'sector' => isEmpty($json['sector']),
+                'industry_category' => isEmpty($json['industry_category']),
+                'industry_group' => isEmpty($json['industry_group']),
+                'short_description' => isEmpty($json['short_description']),
+            ];
+        }
+
+        return $landingInfo;
 
     }
 
@@ -84,7 +134,7 @@ class stockController extends Controller
 
         // Retrieve favorites table to compare if company in search results has already been added
         // If it has, change 'Add to Favorites' button
-        $favorites = Favorite::pluck('ticker')->toArray();
+        $favorites = Auth::user()->favorites()->pluck('ticker')->toArray();
 
         // Function to check if search return fields are empty and leave blank if they are
         function isEmpty($value)
@@ -140,6 +190,7 @@ class stockController extends Controller
         $favorite->sector = $this->request->sector;
         $favorite->industry_category = $this->request->industry_category;
         $favorite->industry_group = $this->request->industry_group;
+        $favorite->user_id = $this->request->user()->id;
         $favorite->save();
 
         Session::flash('message', $this->request->company . ' was added to your favorites.');
@@ -153,7 +204,7 @@ class stockController extends Controller
     public function syncTags()
     {
 
-        $company = Favorite::find($this->request->id);
+        $company = Auth::user()->favorites()->find($this->request->id);
         $tags = ($this->request->tags) ?: [];
 
         $company->tags()->sync($tags);

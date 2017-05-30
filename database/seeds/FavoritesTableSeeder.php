@@ -22,6 +22,7 @@ class FavoritesTableSeeder extends Seeder
             'sector' => 'Healthcare',
             'industry_category' => 'Drugs ',
             'industry_group' => 'Biotechnology',
+            'user_id' => 1,
         ]);
     }
 }

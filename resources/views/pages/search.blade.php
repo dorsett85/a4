@@ -1,10 +1,10 @@
-@extends('master')
+@extends('userPages')
 
 @section('title')
     Search Stocks
 @endsection
 
-@section('body')
+@section('content')
 
     <h1 id="searchHead">
         Search Public Stocks

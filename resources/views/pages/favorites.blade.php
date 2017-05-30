@@ -1,10 +1,10 @@
-@extends('master')
+@extends('userPages')
 
 @section('title')
     Favorites Stocks
 @endsection
 
-@section('body')
+@section('content')
 
     <h1 id="favHead">
         Favorite Stocks
@@ -47,7 +47,7 @@
                 <div class="shortDescription">
                     {{ $value->short_description }}
                 </div>
-                
+
                 <form class="spaceAbove" action="/favorites" method="post">
                     {{ csrf_field() }}
 

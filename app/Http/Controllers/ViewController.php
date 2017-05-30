@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Company;
 use App\Favorite;
 use App\Tag;
+use App\User;
 use Illuminate\Support\Facades\Input;
 use Session;
+use Auth;
 
 class ViewController extends StockController
 {
@@ -14,12 +16,46 @@ class ViewController extends StockController
     /*
      * Landing page
      */
+    public function landing()
+    {
+
+        // Get example company info
+        $landingInfo = $this->landingInfo();
+
+        return view('pages.landing')->with([
+            'landingInfo' => $landingInfo,
+        ]);
+
+    }
+
+
+    /*
+     * Login user homepage
+     */
+    public function guest()
+    {
+
+        $user = User::where('name', '=', 'Guest')->first();
+
+        Auth::login($user);
+
+        return redirect('/home');
+
+    }
+
+
+    /*
+     * Login user homepage
+     */
     public function welcome()
     {
 
-        $favoritesList = Favorite::orderBy('company_name')->get();
+        $userName = Auth::user()->name;
+
+        $favoritesList = Auth::user()->favorites()->orderBy('company_name')->get();
 
         return view('pages.welcome')->with([
+            'userName' => $userName,
             'favoritesList' => $favoritesList
         ]);
 
@@ -40,7 +76,7 @@ class ViewController extends StockController
             $searchResults = $this->companyInfo();
         }
 
-        $favoritesList = Favorite::orderBy('company_name')->get();
+        $favoritesList = Auth::user()->favorites()->orderBy('company_name')->get();
 
         return view('pages.search')->with([
             'favoritesList' => $favoritesList,
@@ -63,7 +99,7 @@ class ViewController extends StockController
         $searchTerm = $this->request->has('searchTerm') ? $this->request->searchTerm : '';
         $searchResults = $this->companyInfo();
 
-        $favoritesList = Favorite::orderBy('company_name')->get();
+        $favoritesList = Auth::user()->favorites()->orderBy('company_name')->get();
 
         return view('pages.search')->with([
             'favoritesList' => $favoritesList,
@@ -93,7 +129,7 @@ class ViewController extends StockController
     public function showFavorites()
     {
 
-        $favorites = Favorite::orderBy('company_name')->get();
+        $favorites = Auth::user()->favorites()->orderBy('company_name')->get();
 
         $allFavoritesTags = Favorite::getTagsForFavorites();
 
@@ -112,7 +148,7 @@ class ViewController extends StockController
     public function removeCompany()
     {
 
-        $company = Favorite::find($this->request->remove);
+        $company = Auth::user()->favorites()->find($this->request->remove);
         $company->tags()->detach();
         $company->delete();
 
@@ -133,8 +169,8 @@ class ViewController extends StockController
         $data = 'set';
 
         // Get array of tags for company and array of all tags
-        $favoritesList = Favorite::orderBy('company_name')->where('ticker', '!=', $ticker)->get();
-        $favorite = Favorite::with('tags')->where('ticker', '=', $ticker)->first();
+        $favoritesList = Auth::user()->favorites()->orderBy('company_name')->where('ticker', '!=', $ticker)->get();
+        $favorite = Auth::user()->favorites()->with('tags')->where('ticker', '=', $ticker)->first();
 
         $tagsForThisCompany = [];
         foreach ($favorite->tags as $tag) {

@@ -4,9 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Auth;
+
 class Favorite extends Model
 {
 
+    // Connect to users
+    public function user() {
+        return $this->belongsTo('App\User');
+    }
+
+
+    // Connect to tags
     public function tags()
     {
         return $this->belongsToMany('App\Tag')->withTimestamps();
@@ -16,7 +25,7 @@ class Favorite extends Model
     // Get tags string for favorite companies in a key value pair array
     public static function getTagsForFavorites() {
 
-        $favorites = Favorite::orderBy('company_name')->get();
+        $favorites = Auth::user()->favorites()->orderBy('company_name')->get();
 
         $favoriteCompanyTags = [];
         $tagArray = [];

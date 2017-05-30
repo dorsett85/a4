@@ -28,6 +28,69 @@ header div {
     margin-left: 15px;
 }
 
+#landingHeader {
+    margin-top: 50px;
+}
+
+#landingHeader i {
+    font-size: 100px;
+}
+
+#landingButtons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+.landingButton {
+    background: linear-gradient(rgba(255, 255, 255, 0.67), #1f9cff);
+}
+
+.landingButton:hover {
+    background: #1f9cff;
+}
+
+#landingHeader, #landingFeatures, #landingInfo {
+    margin-bottom: 50px;
+}
+
+#sampleCompanies {
+    display: flex;
+    justify-content: space-between;
+}
+
+.companyPadding {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.noWrap {
+    white-space: nowrap;
+}
+
+#landingChart {
+    margin-bottom: 200px;
+}
+
+.loginDiv {
+    float: none;
+    background: #ffffff;
+    margin-top: 50px;
+    margin-bottom: 100px;
+    padding-top: 5px;
+    padding-bottom: 15px;
+    box-shadow: 0px 0px 10px 5px #000;
+}
+
+.loginP {
+    font-size: larger;
+    margin-bottom: 25px;
+}
+
+#login div label, #register div label {
+    font-size: large;
+}
+
 #sidebar {
     padding-top: .5em;
     margin-bottom: 1em;

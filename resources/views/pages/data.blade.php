@@ -1,4 +1,4 @@
-@extends('master')
+@extends('userPages')
 
 @section('title')
     Select Data
@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/css/dropdowns-enhancement.css">
 @endsection
 
-@section('body')
+@section('content')
 
     <h1 id="dataHead">
         Create Chart for {{ $company->company_name }}

@@ -1,13 +1,13 @@
-@extends('master')
+@extends('userPages')
 
 @section('title')
     Stock Tracker
 @endsection
 
-@section('body')
+@section('content')
 
     <h1 id="welcomeHead">
-        Welcome to the Stock Tracker Application
+        Welcome {{ $userName }}
     </h1>
 
     <div>

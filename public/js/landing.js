@@ -1,21 +1,29 @@
 $(document).ready(function () {
 
-    // Add Plotly chart
-    $('#plotBtn').click(function (e) {
+    // Show warning on 'Add to Favorites' click
+    $('.alertFade').hide();
+    $('.landingFavorite').click(function (e) {
         event.preventDefault();
+        $(this).siblings('.alertFade').fadeIn().delay(2000).fadeOut(1000);
+    });
+
+
+    // Show Plotly sample
+    $('#landingChartButton').click(function() {
         $('#fa-spinner').addClass('fa fa-spinner fa-spin');
         var plotDiv = document.getElementById('plotDiv');
 
         // Create Quandle url query based on user input
         var urlStart = 'https://www.quandl.com/api/v3/datasets/';
-        var quandlCode = $('#quandlCode').val();
+        var quandlCode = 'WIKI/AAPL';
         var column = 'column_index[]=4&';
-        var transform = 'transform=' + $('#transform').val() + '&';
-        var collapse = 'collapse=' + $('#collapse').val() + '&';
+        var transform = 'transform=';
         var apiKey = 'api_key=ZNUBmiZ3d-zMyLGBxyUt';
 
         // Full Quandl API url call
-        var quandlUrl = urlStart + quandlCode + '/data.csv?' + transform + column + collapse + apiKey;
+        var quandlUrl = urlStart + quandlCode + '/data.csv?' + transform + column + apiKey;
+
+        console.log(quandlUrl);
 
         // Plot data
         Plotly.d3.csv(quandlUrl, function (rows) {
@@ -34,9 +42,9 @@ $(document).ready(function () {
             };
 
             var layout = {
-                title: $('#company').val(),
+                title: 'Apple',
                 yaxis: {
-                    title: $('#transform option:selected').text()
+                    title: 'Change Closing Price'
                 },       // set the y axis title
                 xaxis: {
                     showgrid: false,                  // remove the x-axis grid lines
@@ -48,10 +56,8 @@ $(document).ready(function () {
             };
 
             Plotly.newPlot(plotDiv, [trace], layout, {showLink: false});
-            $('#tagDiv').show();
             $('#fa-spinner').removeClass('fa fa-spinner fa-spin');
         });
-
     });
 
 

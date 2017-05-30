@@ -35,47 +35,7 @@
 
 <div class="container">
     <div id="mainDiv" class="col-md-10 col-md-offset-1">
-
-        <div id="sidebar" class="col-md-3">
-            <ul class="nav nav-pills nav-stacked">
-                <li class="nav-item">
-                    <a class="nav-link" id="home" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="search" href="/search">Search Stocks</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="favorites" href="/favorites">Favorites</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="dropdown-toggle" id="data" data-toggle="dropdown" href="#">
-                        Data <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        @if($favoritesList->isEmpty())
-                            <li>
-                                <a class="nav-link dropdown-item">
-                                    Add More Favorites
-                                </a>
-                            </li>
-                        @else
-                            @foreach($favoritesList as $item)
-                                <li>
-                                    <a class="nav-link dropdown-item" href="/data/{{ $item->ticker }}">
-                                        {{ $item->company_name }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        @endif
-                    </ul>
-                </li>
-            </ul>
-        </div>
-
-        <div id="bodyDiv" class="col-md-9">
-            @yield('body')
-        </div>
-
+        @yield('body')
     </div>
 </div>
 
