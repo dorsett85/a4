@@ -9,10 +9,11 @@ $(document).ready(function () {
 
     // Show random Plotly chart
     $('#landingChartButton').click(function() {
-        $.get('/random', function (data) {
 
-            // Start spinner icon while chart loads
-            $('#fa-spinner').addClass('fa fa-spinner fa-spin');
+        // Start spinner icon while chart loads
+        $('#fa-spinner').addClass('fa fa-spinner fa-spin');
+
+        $.get('/random', function (data) {
 
             // Get ajax call data
             var company = data.randomCompany['name'];
@@ -66,6 +67,7 @@ $(document).ready(function () {
 
                 // Stop spinner after chart loads
                 $('#fa-spinner').removeClass('fa fa-spinner fa-spin');
+
             });
         });
     });
