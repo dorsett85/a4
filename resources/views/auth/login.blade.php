@@ -6,12 +6,13 @@
 
 @section('body')
 
-    <div class="col-sm-5 center-block loginDiv">
+    <div class="col-sm-6 center-block loginDiv">
 
         <div class="text-center loginP">
             <h1>Login</h1>
 
-            Don't have an account? <a href='/register'>Register here...</a>
+            Don't have an account? <a href='/register'>Register here...</a><br>
+            Or, return to <a href='/'>main page...</a>
         </div>
 
         <form id='login' method="POST" action="/login">

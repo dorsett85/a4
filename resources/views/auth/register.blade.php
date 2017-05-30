@@ -6,10 +6,12 @@
 
 @section('body')
 
-    <div class="col-sm-5 center-block loginDiv">
+    <div class="col-sm-6 center-block loginDiv">
 
         <div class="text-center loginP">
             <h1>Register</h1>
+
+            Return to <a href='/'>main page...</a>
         </div>
 
         <form method="POST" id='register' action="{{ route('register') }}">
