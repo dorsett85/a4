@@ -1,9 +1,11 @@
 <?php
 
 /*
- * Landing and login routes
+ * Landing, randomChart, and user authentication routes
  */
 Route::get('/', 'ViewController@landing');
+
+Route::get('/random', 'StockController@randomChart');
 
 Auth::routes();
 
@@ -33,5 +35,3 @@ Route::group(['middleware' => 'auth'], function() {
 // Practice route
 Route::get('/practice', 'practiceController@practice');
 
-
-Route::get('/random', 'RandomChartController@randomChart');

@@ -109,6 +109,10 @@ header div {
     background: #580408;
 }
 
+#logout {
+    margin-top: 5px;
+}
+
 #bodyDiv {
     border-left: thin ridge #000000;
     -webkit-box-shadow: -5px 0px 5px -3px #616161;

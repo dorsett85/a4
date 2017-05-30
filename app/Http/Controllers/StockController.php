@@ -77,6 +77,24 @@ class stockController extends Controller
 
 
     /*
+     * Create sample random chart
+     */
+    public function randomChart()
+    {
+
+        $randomCompany = Company::get()->shuffle()->first();
+
+        $randomCompany = [
+            'name' => $randomCompany->company_name,
+            'quandl_code' => $randomCompany->quandl_code
+        ];
+
+        return response()->json(array('randomCompany' => $randomCompany));
+
+    }
+
+
+    /*
      * Custom validation to check if user input matches a company from the companies table
      */
     public function validateCompany($attribute, $value, $parameters, $validator)
@@ -128,8 +146,14 @@ class stockController extends Controller
             )
         ));
 
-        // Match user input to the companies table
+        // Get search term and have the function return null if value is null
         $name = ($this->request->has('searchTerm')) ? $this->request->searchTerm : Input::old('searchTerm');
+
+        if (is_null($name)) {
+            return null;
+        }
+
+        // Match search term to the companies table
         $matches = Company::where('company_name', 'like', "%$name%")->orderBy('company_name')->get();
 
         // Retrieve favorites table to compare if company in search results has already been added
