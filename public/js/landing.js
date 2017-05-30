@@ -11,7 +11,6 @@ $(document).ready(function () {
     });
 
     // Show warning on 'Add to Favorites' click
-    $('.alertFade').hide();
     $('.landingFavorite').click(function (e) {
         event.preventDefault();
         $(this).siblings('.alertFade').fadeIn().delay(2000).fadeOut(1000);
@@ -28,6 +27,7 @@ $(document).ready(function () {
             // Get ajax call data
             var company = data.randomCompany['name'];
             var quandl_code = data.randomCompany['quandl_code'];
+            var transformLabel = data.randomCompany['transformLabel'];
 
             // Get div to place chart inside
             var plotDiv = document.getElementById('plotDiv');
@@ -36,10 +36,11 @@ $(document).ready(function () {
             var urlStart = 'https://www.quandl.com/api/v3/datasets/';
             var quandlCode = quandl_code;
             var column = 'column_index[]=4&';
+            var transform = 'transform=' + data.randomCompany['transform'] + '&';
             var apiKey = 'api_key=ZNUBmiZ3d-zMyLGBxyUt';
 
             // Full Quandl API url call
-            var quandlUrl = urlStart + quandlCode + '/data.csv?' + column + apiKey;
+            var quandlUrl = urlStart + quandlCode + '/data.csv?' + column + transform + apiKey;
 
             console.log(quandlUrl);
 
@@ -62,7 +63,7 @@ $(document).ready(function () {
                 var layout = {
                     title: company,
                     yaxis: {
-                        title: 'Closing Price'
+                        title: transformLabel
                     },       // set the y axis title
                     xaxis: {
                         showgrid: false,                  // remove the x-axis grid lines
@@ -75,8 +76,9 @@ $(document).ready(function () {
 
                 Plotly.newPlot(plotDiv, [trace], layout, {showLink: false});
 
-                // Stop spinner after chart loads
+                // Stop spinner after chart loads and show exampleSpan
                 $('#fa-spinner').removeClass('fa fa-spinner fa-spin');
+                $('#exampleSpan').show();
 
             });
         });

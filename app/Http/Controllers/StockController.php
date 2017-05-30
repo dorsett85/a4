@@ -82,11 +82,22 @@ class stockController extends Controller
     public function randomChart()
     {
 
+        // Get random company and transform type
         $randomCompany = Company::get()->shuffle()->first();
+        $transform = [
+            ['none', 'Closing Price'],
+            ['diff', 'Change Closing Price'],
+            ['rdiff', '% Change Closing Price'],
+            ['cumul', 'Cumulative Closing Price']
+        ];
+        shuffle($transform);
+        $transform = $transform[0];
 
         $randomCompany = [
             'name' => $randomCompany->company_name,
-            'quandl_code' => $randomCompany->quandl_code
+            'quandl_code' => $randomCompany->quandl_code,
+            'transform' => $transform[0],
+            'transformLabel' => $transform[1]
         ];
 
         return response()->json(array('randomCompany' => $randomCompany));

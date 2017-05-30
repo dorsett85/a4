@@ -33,5 +33,5 @@ Route::group(['middleware' => 'auth'], function() {
 });
 
 // Practice route
-Route::get('/practice', 'practiceController@practice');
+Route::get('/practice', 'StockController@randomChart');
 

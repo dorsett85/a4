@@ -86,6 +86,7 @@
         <button id="landingChartButton" class="btn btn-lg btn-warning">
             View sample chart <i class="fa fa-line-chart" aria-hidden="true"></i> <i id="fa-spinner"></i>
         </button>
+        <span id="exampleSpan">Click again to see more examples!</span>
         <div id="plotDiv">
             <!-- Plotly chart will go here on button click -->
         </div>

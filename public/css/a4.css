@@ -65,6 +65,10 @@ header div {
     padding-right: 5px;
 }
 
+.alertFade, #exampleSpan {
+    display: none;
+}
+
 #landingChart {
     margin-bottom: 150px;
 }
