@@ -7,7 +7,7 @@ $(document).ready(function () {
         $(this).siblings('.alertFade').fadeIn().delay(2000).fadeOut(1000);
     });
 
-    // Show Plotly sample
+    // Show random Plotly chart
     $('#landingChartButton').click(function() {
         $.get('/random', function (data) {
 

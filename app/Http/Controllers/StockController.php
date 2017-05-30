@@ -77,7 +77,7 @@ class stockController extends Controller
 
 
     /*
-     * Create sample random chart
+     * Get random chart info
      */
     public function randomChart()
     {
