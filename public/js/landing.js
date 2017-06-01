@@ -80,6 +80,16 @@ $(document).ready(function () {
                 $('#fa-spinner').removeClass('fa fa-spinner fa-spin');
                 $('#exampleSpan').show();
 
+                // Scroll down after chart loads
+                var scrollDown =
+                    $('body').height() -
+                    $('#landingChart').height() -
+                    $('header').height() -
+                    $('footer').height() +
+                    25
+                ;
+                $('body').animate({scrollTop: scrollDown}, 'slow');
+
             });
         });
     });

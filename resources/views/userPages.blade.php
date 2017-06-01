@@ -37,7 +37,7 @@
 
         <form method='POST' id='logout' action='/logout'>
             {{csrf_field()}}
-            <button class="btn btn-lg btn-warning btn-block">Logout</button>
+            <button class="btn btn-lg btn-default btn-block">Logout</button>
         </form>
 
     </div>
