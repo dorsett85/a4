@@ -43,57 +43,28 @@ class CompaniesTableSeeder extends Seeder
             }
         }
 
-        // Pull all Quandle symbols, names, and codes
-        function stockIndex($exchange)
-        {
-            if (($handle = fopen('https://s3.amazonaws.com/static.quandl.com/tickers/' . $exchange . '.csv', 'r')) === false) {
-                die('Error opening file');
+        // Get all Quandle tickers and codes
+        $csv = array_map('str_getcsv', file("public/wiki_codes/wiki_codes.csv"));
+        $headers = $csv[0];
+        unset($csv[0]);
+        $quandlCompanies = [];
+        foreach ($csv as $row) {
+            $newRow = [];
+            foreach ($headers as $k => $key) {
+                $newRow[$key] = $row[$k];
             }
-
-            $headers = fgetcsv($handle, 1000);
-            $output = array();
-
-            while ($row = fgetcsv($handle, 1000)) {
-                $output[] = array_combine($headers, $row);
-            }
-
-            fclose($handle);
-
-            // Remove premium_code row
-            foreach ($output as $key => $value) {
-                unset($value['premium_code']);
-            }
-
-            // Remove incomplete rows
-            $output = array_filter($output, function ($sub_arr) {
-                foreach ($sub_arr as $item)
-                    if ($item === "")
-                        return false;
-                return true;
-            });
-
-            return $output;
+            $quandlCompanies[] = $newRow;
         }
 
-        // Apply stockIndex function to each market
-        $sp500 = stockIndex('SP500');
-        $dowJones = stockIndex('dowjonesA');
-        $nasdaqComposite = stockIndex('NASDAQComposite');
-        $nasdaq100 = stockIndex('nasdaq100');
-        $nyseComposite = stockIndex('NYSEComposite');
-        $ftse100 = stockIndex('FTSE100');
-
-        // Merge Quandl data into one array
-        $quandlCompanies = array_merge($sp500, $dowJones, $nasdaqComposite, $nasdaq100, $nyseComposite, $ftse100);
-
         // Filter out Intrinio data that is not in Quandl data and add Quandl codes
+        $masterList = [];
         foreach ($intrinioCompanies as $intrinio) {
             foreach ($quandlCompanies as $quandl) {
                 if ($intrinio['ticker'] == $quandl['ticker']) {
                     $masterList[] = [
                         'ticker' => $intrinio['ticker'],
                         'name' => $intrinio['name'],
-                        'free_code' => $quandl['free_code'],
+                        'quandl_code' => $quandl['quandl_code'],
                     ];
                     break;
                 }
@@ -105,7 +76,7 @@ class CompaniesTableSeeder extends Seeder
             Company::insert([
                 'ticker' => $value['ticker'],
                 'company_name' => $value['name'],
-                'quandl_code' => $value['free_code'],
+                'quandl_code' => $value['quandl_code'],
             ]);
         }
     }
