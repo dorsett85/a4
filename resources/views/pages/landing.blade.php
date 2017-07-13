@@ -46,7 +46,7 @@
 
     <div id="landingInfo">
         <h3>
-            Sample company/Fund Information
+            Sample Company/Fund Information
         </h3>
 
         <div id="sampleCompanies">
