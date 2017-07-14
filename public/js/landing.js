@@ -83,13 +83,13 @@ $(document).ready(function () {
 
                 // Scroll down after chart loads
                 var scrollDown =
-                    $('body').height() -
+                    $('html, body').height() -
                     $('#landingChart').height() -
                     $('header').height() -
                     $('footer').height() +
                     25
                 ;
-                $('body').animate({scrollTop: scrollDown}, 'slow');
+                $('html, body').animate({scrollTop: scrollDown}, 'slow');
 
             });
         });
