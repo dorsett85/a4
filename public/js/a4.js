@@ -13,19 +13,19 @@ $(document).ready(function () {
 
     // On Landing Page
     $('.landingInfo').click(function (e) {
-        event.preventDefault();
+        e.preventDefault();
         $(this).siblings('.shortDescription').toggle('slow');
     });
 
     // On search page
     $('.searchInfo').click(function (e) {
-        event.preventDefault();
+        e.preventDefault();
         $(this).siblings('.shortDescription').toggle('slow');
     });
 
     // on Favorites page
     $('.favoriteInfo').click(function (e) {
-        event.preventDefault();
+        e.preventDefault();
         $(this).parent().siblings('.shortDescription').toggle('slow');
     });
 

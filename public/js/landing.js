@@ -12,12 +12,13 @@ $(document).ready(function () {
 
     // Show warning on 'Add to Favorites' click
     $('.landingFavorite').click(function (e) {
-        event.preventDefault();
+        e.preventDefault();
         $(this).siblings('.alertFade').fadeIn().delay(2000).fadeOut(1000);
     });
 
     // Show random Plotly chart
-    $('#landingChartButton').click(function() {
+    $('#landingChartButton').click(function(e) {
+        e.preventDefault();
 
         // Start spinner icon while chart loads
         $('#fa-spinner').addClass('fa fa-spinner fa-spin');

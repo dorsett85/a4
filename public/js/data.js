@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     // Add Plotly chart
     $('#plotBtn').click(function (e) {
-        event.preventDefault();
+        e.preventDefault();
 
         // Start spinner icon while chart loads
         $('#fa-spinner').addClass('fa fa-spinner fa-spin');
