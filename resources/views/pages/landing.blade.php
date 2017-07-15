@@ -38,7 +38,7 @@
         </h3>
         <ul>
             <li>Quandl API stock prices, updated daily</li>
-            <li>Intrinio API Company/fund information</li>
+            <li>Intrinio API company/fund information</li>
             <li>Interactive and customizable price charts</li>
             <li>Save and track your portfolio of favorite stocks</li>
         </ul>
